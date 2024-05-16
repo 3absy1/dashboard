@@ -1,0 +1,11 @@
+{
+    "name": "ReferenceModule",
+    "alias": "referencemodule",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ReferenceModule\\App\\Providers\\ReferenceModuleServiceProvider"
+    ],
+    "files": []
+}

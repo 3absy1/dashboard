@@ -141,9 +141,7 @@ class ReferenceModuleController extends Controller
     public function export(Request $request)
     {
 
-        // Retrieve selected data from the database
         $data = ExcelData::select('name', 'code')->get();
-        // Export data to Excel
         return Excel::download(new Export($data), 'references.xlsx');
 
     }

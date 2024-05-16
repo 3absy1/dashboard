@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Modules\ReferenceModule\App\Models\Reference;
 use Modules\ReferenceModule\App\Models\Related;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Facades\Validator;
 
 class Code implements ToModel , WithHeadingRow
 {
@@ -28,12 +29,14 @@ class Code implements ToModel , WithHeadingRow
     public function model(array $row)
     {
 
-        if (empty($row[$this->name])) {
-            return null;
-        }
+        $rules = [
+            $this->name => 'required',
+            $this->code => 'required|numeric',
+        ];
 
-        if (!is_numeric($row[$this->code])) {
-            return null;
+        $validator = Validator::make($row, $rules);
+        if ($validator->fails()) {
+            return;
         }
 
 
@@ -64,16 +67,12 @@ class Code implements ToModel , WithHeadingRow
             ExcelData::create([
                 'name' => $row[$this->name],
                 'code' => $row[$this->code],
+                'reference_name'=>'not found',
+                'code2'=>null
+
             ]);
         }
         }
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => 'required',
-            'code' => 'numeric',
-        ];
-    }
 }

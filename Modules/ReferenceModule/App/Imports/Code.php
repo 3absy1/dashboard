@@ -18,7 +18,8 @@ class Code implements ToModel , WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-
+    public$name;
+    public $code;
     public function __construct($name,$code)
     {
         $this->name = $name;

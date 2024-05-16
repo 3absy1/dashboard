@@ -82,7 +82,12 @@
                     <td>{{$exceldata->name}}</td>
                     <td>{{$exceldata->code}}</td>
                     <td class="text-start">{{$exceldata->reference_name}}</td>
+                    @if ($exceldata->code2 == null)
+                    <td>Not Found</td>
+                    @else
                     <td>{{$exceldata->code2}}</td>
+                    @endif
+
                     <td>{{$exceldata->created_at}}</td>
                 </tr>
                     @endforeach

@@ -81,6 +81,18 @@
                     </div>
                 </div>
                 </div>
+
+                <form action="{{ route('upload.reference') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    {{-- <input type="file" name="file"> --}}
+                    <div class="col-12 col-lg-12 col-xl-4">
+                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Import Excel </label>
+                        (name , code)
+                        <input class="form-control" name="file" id="mainAdminLogo" type="file" />
+                        <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
+
+                    </div>
+                </form>
             <!-- data table -->
                 <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
                     <thead class="">

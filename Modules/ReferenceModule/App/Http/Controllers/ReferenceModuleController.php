@@ -12,8 +12,7 @@ use Modules\ReferenceModule\App\Models\Reference;
 use Modules\ReferenceModule\App\Models\Related;
 use Modules\ReferenceModule\App\Models\ExcelData;
 use Modules\ReferenceModule\App\Imports\Code;
-
-
+use Modules\ReferenceModule\App\Imports\ReferenceImport;
 
 class ReferenceModuleController extends Controller
 {
@@ -79,7 +78,24 @@ class ReferenceModuleController extends Controller
 
         }
 
+        public function uploadReference(Request $request)
+        {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
+            ]);
 
+        if ($request->file('file')->isValid()) {
+            if ($request->hasFile('file')) {
+                (new ReferenceImport)->import($request->file('file'));
+
+                return redirect()->back()->with('success', 'Data imported successfully');
+            }
+
+            return redirect()->back()->with('error', 'Please select a file to upload.');
+        }
+
+        return "Error: Invalid file.";
+    }
 
 
 

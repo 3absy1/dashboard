@@ -3,9 +3,8 @@
 namespace Modules\ReferenceModule\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Modules\ReferenceModule\App\Imports\RelatedImport;
 use Modules\ReferenceModule\App\Models\Related;
 use Modules\ReferenceModule\App\Models\Reference;
 
@@ -65,5 +64,24 @@ class RelatedController extends Controller
                     return redirect()->route('related');
 
             }
+
+            public function uploadRelated(Request $request)
+            {
+                $request->validate([
+                    'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
+                ]);
+
+            if ($request->file('file')->isValid()) {
+                if ($request->hasFile('file')) {
+                    (new RelatedImport)->import($request->file('file'));
+
+                    return redirect()->back()->with('success', 'Data imported successfully');
+                }
+
+                return redirect()->back()->with('error', 'Please select a file to upload.');
+            }
+
+            return "Error: Invalid file.";
+        }
 
 }

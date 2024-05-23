@@ -10,11 +10,13 @@ use Modules\ReferenceModule\App\Exports\Export;
 use Modules\ReferenceModule\App\Imports\Import;
 use Modules\ReferenceModule\App\Imports\Name;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\ReferenceModule\App\Exports\WasteExport;
 use Modules\ReferenceModule\App\Models\Reference;
 use Modules\ReferenceModule\App\Models\Related;
 use Modules\ReferenceModule\App\Models\ExcelData;
 use Modules\ReferenceModule\App\Imports\Code;
 use Modules\ReferenceModule\App\Imports\ReferenceImport;
+use Modules\ReferenceModule\App\Models\ValidReference;
 use Modules\ReferenceModule\App\Models\WasteReference;
 
 class ReferenceModuleController extends Controller
@@ -101,7 +103,7 @@ class ReferenceModuleController extends Controller
             (new ReferenceImport($name,$code))->import($filePath);
 
 
-            return redirect()->route('reference') ;
+            return redirect()->route('reference.show') ;
     }
 
 
@@ -139,6 +141,32 @@ class ReferenceModuleController extends Controller
 }
 
 
+public function validAndWaste()
+{
+    return view('referencemodule::validandwaste',[
+        'valid' => ValidReference::all(),
+        'waste' => WasteReference::all(),
+    ]);
+
+}
+
+
+public function approveReference(Request $request)
+{
+    ValidReference::query()->delete();
+        $referenceData = $request->input('data', []);
+        foreach ($referenceData as $data) {
+
+            Reference::create([
+                'name' => $data['name'],
+                'code' => $data['code'],
+            ]);
+
+        }
+    return redirect()->route('reference');
+}
+
+
 
         public function uploadFile(Request $request)
         {
@@ -156,8 +184,11 @@ class ReferenceModuleController extends Controller
                 $import = new Import();
                 $importedData = Excel::toCollection($import, $filePath);
                 $firstRow = $importedData->first()->first();
-                $headers = $firstRow->keys()->toArray();
+                $stringHeaders = $firstRow->keys()->toArray();
                 // $headers = Excel::toArray(new Import(), $filePath);
+                $headers = array_filter($stringHeaders, function($header) {
+                    return !is_numeric($header);
+                });
 
                 return view('referencemodule::colums',compact('headers'));
             }
@@ -203,8 +234,13 @@ class ReferenceModuleController extends Controller
 
     }
 
+    public function wasteexport(Request $request)
+    {
 
+        $data = WasteReference::select('name', 'code')->get();
+        return Excel::download(new WasteExport($data), 'unValid.xlsx');
 
+    }
 
 
 }

@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="modal-body">
                                         <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Code </label>
-                                        <input class="form-control" id="code" type="number" name="code" placeholder="1234"required />
+                                        <input class="form-control" id="code" type="text" name="code" placeholder="1234"required />
                                         </div>
                                         <div class="modal-body">
                                             <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
@@ -132,6 +132,9 @@
                             <tr>
                                 <td>{{$related->id}}</td>
                                 <td></td>
+                                <form action="{{ route('reference.insert','test') }} " method="POST">
+                                    @csrf
+                                    @method('PUT')
                                 @if (is_null($related->reference_id))
                                 <td class="text-start">
                                     <select name="reference_id" class="form-select" aria-label="Select reference">
@@ -150,12 +153,10 @@
                                 <td>{{$related->created_at}}</td>
                                 <td class="align-middle text-start white-space-nowrap pe-0 action py-2">
                                     @if (is_null($related->reference_id))
-                                    <form action="{{ route('related.update','test') }} " method="POST">
-                                        @csrf
-                                        @method('PUT')
+
+                                        <input type="hidden" class="form-control" name="id" value="{{$related->id}}">
+
                                     <button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="submit" data-bs-toggle="modal" data-bs-target="#insertModal{{$related->id}}">Insert</button>
-                                    <input type="hidden" class="form-control" name="name" value="{{$related->name}}">
-                                    <input type="hidden" class="form-control" name="code" value="{{$related->code}}">
 
                                     </form>
                                     @endif
@@ -173,7 +174,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Code </label>
-                                                <input class="form-control" id="code" type="number" name="code" value="{{$related->code}}" />
+                                                <input class="form-control" id="code" type="text" name="code" value="{{$related->code}}" />
                                                 <input type="hidden" class="form-control" name="id" value="{{$related->id}}">
                                                 </div>
                                                 <div class="modal-body">

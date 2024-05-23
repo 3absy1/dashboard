@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Modules\ReferenceModule\App\Models\Reference;
 use Illuminate\Support\Facades\Validator;
+use Modules\ReferenceModule\App\Models\ValidReference;
 use Modules\ReferenceModule\App\Models\WasteReference;
 
 class ReferenceImport implements ToModel , WithHeadingRow
@@ -34,7 +35,7 @@ class ReferenceImport implements ToModel , WithHeadingRow
 
         $rules = [
             $this->name => 'required',
-            $this->code => 'required|numeric|unique:references,code',
+            $this->code => 'required|unique:references,code',
         ];
 
         $validator = Validator::make($row, $rules);
@@ -53,14 +54,6 @@ class ReferenceImport implements ToModel , WithHeadingRow
 
 
                 ]);
-            }elseif (!is_numeric($row[$this->code])) {
-                return new WasteReference([
-                    'name' =>$row[$this->name],
-                    'code' =>$row[$this->code],
-                    'reason'=>"code must be a numeric value.",
-
-
-                ]);
             }elseif (Reference::where('code', $row[$this->code])->exists()) {
                 return new WasteReference([
                     'name' =>$row[$this->name],
@@ -71,7 +64,7 @@ class ReferenceImport implements ToModel , WithHeadingRow
             }
 
         }
-        return new Reference([
+        return new ValidReference([
             'name' =>$row[$this->name],
             'code' =>$row[$this->code],
         ]);

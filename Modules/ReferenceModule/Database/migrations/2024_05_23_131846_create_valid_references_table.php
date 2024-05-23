@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('excel_data', function (Blueprint $table) {
+        Schema::create('valid_references', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('name');
-            $table->string('reference_name')->nullable();
-            $table->integer('code2')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('excel_data');
+        Schema::dropIfExists('valid_references');
     }
 };

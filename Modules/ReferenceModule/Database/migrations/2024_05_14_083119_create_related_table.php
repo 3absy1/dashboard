@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('reference_id')->nullable()->references('id')->on('references')->cascadeOnDelete();
             $table->string('name');
-            $table->integer('code')->unique();
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

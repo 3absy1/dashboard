@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="modal-body">
                                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Code </label>
-                                <input class="form-control" id="code" type="number" name="code" placeholder="1234"required />
+                                <input class="form-control" id="code" type="text" name="code" placeholder="1234"required />
                                 </div>
                                 <div class="modal-body">
                                     <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
@@ -135,7 +135,7 @@
                                             </div>
                                             <div class="modal-body">
                                             <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Code </label>
-                                            <input class="form-control" id="code" type="number" name="code" value="{{$reference->code}}" />
+                                            <input class="form-control" id="code" type="text" name="code" value="{{$reference->code}}" />
                                             <input type="hidden" class="form-control" name="id" value="{{$reference->id}}">
                                             </div>
                                             <div class="modal-body">

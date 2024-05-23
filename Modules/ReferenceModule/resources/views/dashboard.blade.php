@@ -75,7 +75,6 @@
             </tr>
         </thead>
         <tbody>
-            
             @foreach ($exceldata as $index => $data)
                 <tr>
                     <td>{{ $data->id }}</td>

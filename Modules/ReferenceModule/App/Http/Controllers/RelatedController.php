@@ -67,6 +67,25 @@ class RelatedController extends Controller
             }
             }
 
+            public function referenceinsert(Request $request)
+            {
+                // dd($request->code);
+
+                try {
+                    $related = Related::find($request->id);
+
+                    $related->reference_id=$request->reference_id;
+
+                    $related->save();
+
+                    return redirect()->route('related');
+                }
+                catch
+                (\Exception $e) {
+                    return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+                }
+                }
+
 
             public function delete($id)
             {
@@ -104,8 +123,11 @@ class RelatedController extends Controller
                 $import = new Import();
                 $importedData = Excel::toCollection($import, $filePath);
                 $firstRow = $importedData->first()->first();
-                $headers = $firstRow->keys()->toArray();
+                $stringHeaders = $firstRow->keys()->toArray();
                 // $headers = Excel::toArray(new Import(), $filePath);
+                $headers = array_filter($stringHeaders, function($header) {
+                    return !is_numeric($header);
+                });                // $headers = Excel::toArray(new Import(), $filePath);
 
                 return view('referencemodule::relatedImport',compact('headers'));
             }

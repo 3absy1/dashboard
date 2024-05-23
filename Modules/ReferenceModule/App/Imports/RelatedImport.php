@@ -35,7 +35,7 @@ class RelatedImport implements ToModel , WithHeadingRow
         $rules = [
 
             $this->name => 'required',
-            $this->code => 'required|numeric',
+            $this->code => 'required',
         ];
 
         $validator = Validator::make($row, $rules);

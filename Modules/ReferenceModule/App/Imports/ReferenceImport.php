@@ -35,7 +35,7 @@ class ReferenceImport implements ToModel , WithHeadingRow
 
         $rules = [
             $this->name => 'required',
-            $this->code => 'required|unique:references,code',
+            $this->code => 'required|unique:valid_references,code',
         ];
 
         $validator = Validator::make($row, $rules);
@@ -54,7 +54,7 @@ class ReferenceImport implements ToModel , WithHeadingRow
 
 
                 ]);
-            }elseif (Reference::where('code', $row[$this->code])->exists()) {
+            }elseif (ValidReference::where('code', $row[$this->code])->exists()) {
                 return new WasteReference([
                     'name' =>$row[$this->name],
                     'code' =>$row[$this->code],

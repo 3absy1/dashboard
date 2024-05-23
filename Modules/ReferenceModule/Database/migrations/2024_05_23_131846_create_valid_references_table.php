@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('valid_references', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('code')->nullable();
+            $table->string('code')->nullable()->unique();
             $table->timestamps();
         });
     }

@@ -119,7 +119,7 @@
                             <td>{{$data->id}}</td>
                             <td></td>
                             <td class="text-start">{{$data->name}}</td>
-                            <td>{{$data->name}}</td>
+                            <td>{{$data->code}}</td>
 
                             <td>{{$data->reason}}</td>
 

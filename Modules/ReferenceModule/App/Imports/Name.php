@@ -24,7 +24,7 @@ class Name implements ToModel , WithHeadingRow
 
     public$name;
     public $code;
-    
+
     public function __construct($name,$code)
     {
         $this->name = $name;
@@ -75,7 +75,7 @@ class Name implements ToModel , WithHeadingRow
             ExcelData::create([
                 'name' => $row[$this->name],
                 'code' => $row[$this->code] ,
-                'reference_name'=>'Not Found',
+                'reference_name'=>null,
                 'code2'=>null
 
             ]);

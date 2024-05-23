@@ -72,7 +72,7 @@
                 </div>
                 </div>
 
-                <form method="POST" action="{{ route('import.upload') }}"  enctype="multipart/form-data">
+                <form method="POST" action="{{ route('upload.reference') }}"  enctype="multipart/form-data">
                     @csrf
                     <div class="tab-pane fade active show" id="tab-tab1" role="tabpanel" aria-labelledby="Main-tab">
                         <div class="row g-3 mb-5">
@@ -102,16 +102,7 @@
                                 <label for="floatingSelect">Headers </label>
                             </div>
                         </div>
-                        <label >Search Depends Of name and code </label>
-                        <div class="form-floating">
-                            <select name="select" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option  value="1">name</option>
-                            <option  value="2">code</option>
 
-
-                            </select>
-                            <label for="floatingSelect">Selector</label>
-                        </div>
                     </div>
 
                     <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Save</button></div>

@@ -12,11 +12,12 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title> Dashboard | Phoenix </title>
+    <title> Reference | Mapping Tool </title>
     @include('main.head-css')
 
 </head>
     <body>
+
         <!-- ===============================================-->
         <!--    Main Content-->
         <!-- ===============================================-->
@@ -82,7 +83,7 @@
                 </div>
                 </div>
 
-                <form action="{{ route('upload.reference') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('uploadupload-file-reference') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{-- <input type="file" name="file"> --}}
                     <div class="col-12 col-lg-12 col-xl-4">
@@ -93,7 +94,8 @@
 
                     </div>
                 </form>
-            <!-- data table -->
+
+                <!-- data table -->
                 <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
                     <thead class="">
                     <tr class="px-2 py-2  text-head">
@@ -174,6 +176,36 @@
                     </tr>
                         @endforeach
 
+
+                    </tbody>
+
+                </table>
+                <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-user-lock me-2 fs-0"></span>Waste Reference Names</h5>
+
+                <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
+                    <thead class="">
+                    <tr class="px-2 py-2  text-head">
+                        <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
+                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Select</span> </th>
+                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort"> Name</span> </th>
+                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Code</span> </th>
+                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort"> Reason</span> </th>
+
+                    </tr>
+                </thead>
+
+                    <tbody>
+                        @foreach ( $wastereferences as $wastereference )
+
+                    <tr>
+                        <td>{{$wastereference->id}}</td>
+                        <td></td>
+                        <td class="text-start">{{$wastereference->name}}</td>
+                        <td>{{$wastereference->code}}</td>
+
+                        <td>{{$wastereference->reason}}</td>
+                    </tr>
+                        @endforeach
 
                     </tbody>
 

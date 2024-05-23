@@ -12,7 +12,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title> Dashboard | Phoenix </title>
+    <title> Dashboard | Mapping Tool </title>
     @include('main.head-css')
 
 </head>
@@ -37,7 +37,7 @@
                 </div>
                 </div>
             </div>
-            
+
 
             <form action="{{ route('upload.file') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -60,49 +60,64 @@
             </form>
 
                 <!-- data table -->
-                <form action="{{ route('export.data') }}" method="GET">
-                <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
-                <thead class="">
-                <tr class="px-2 py-2  text-head">
-                    <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Select</span> </th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Enter Name</span> </th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Enter Code</span> </th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Reference Name</span> </th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Code</span> </th>
-                    <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort">Created At</span> </th>
-                </tr>
-            </thead>
-
-                <tbody>
-                    @foreach ( $exceldata as $exceldata )
-
+    <form action="{{ route('related.create') }}" method="POST">
+    @csrf
+    <table id="userAccessTable" class="responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
+        <thead>
+            <tr class="px-2 py-2 text-head">
+                <th class="text-start text-nowrap">ID</th>
+                <th class="align-middle text-nowrap">Select</th>
+                <th class="align-middle text-nowrap">Enter Name</th>
+                <th class="align-middle text-nowrap">Enter Code</th>
+                <th class="align-middle text-nowrap">Reference Name</th>
+                <th class="align-middle text-nowrap">Code</th>
+                <th class="align-middle text-nowrap">Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach ($exceldata as $index => $data)
                 <tr>
-                    <td>{{$exceldata->id}}</td>
+                    <td>{{ $data->id }}</td>
                     <td></td>
-                    <td>{{$exceldata->name}}</td>
-                    <td>{{$exceldata->code}}</td>
-                    <td class="text-start">{{$exceldata->reference_name}}</td>
-                    @if ($exceldata->code2 == null)
-                    <td>Not Found</td>
+                    <td>{{ $data->name }}</td>
+                    <td>{{ $data->code }}</td>
+                    @if ($data->reference_name == null)
+                        <td class="text-start">
+                            <select name="data[{{ $index }}][reference_id]" class="form-select" aria-label="Select reference">
+                                <option selected>Not Found</option>
+                                @foreach ($references as $reference)
+                                    <option value="{{ $reference->id }}">{{ $reference->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
                     @else
-                    <td>{{$exceldata->code2}}</td>
+                        <td class="text-start">{{ $data->reference_name }}</td>
                     @endif
-
-                    <td>{{$exceldata->created_at}}</td>
+                    @if ($data->code2 == null)
+                        <td>Not Found ({{ $data->code }})
+                            <input type="hidden" class="form-control" name="data[{{ $index }}][code]" value="{{ $data->code }}">
+                            <input type="hidden" class="form-control" name="data[{{ $index }}][name]" value="{{ $data->name }}">
+                        </td>
+                    @else
+                        <td>{{ $data->code2 }}</td>
+                    @endif
+                    <td>{{ $data->created_at }}</td>
                 </tr>
-                    @endforeach
+            @endforeach
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success px-7">Create</button>
+</form>
 
 
-                </tbody>
-
-
-            </table>
             <form action="{{ route('export.data') }}" method="GET">
 
-            <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Export</button></div>
+            <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Export Table</button></div>
 
         </form>
+
+
 
 
 

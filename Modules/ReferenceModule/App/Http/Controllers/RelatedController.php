@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Modules\ReferenceModule\App\Imports\RelatedImport;
 use Modules\ReferenceModule\App\Models\Related;
 use Modules\ReferenceModule\App\Models\Reference;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\ReferenceModule\App\Imports\Import;
+use Modules\ReferenceModule\App\Models\ExcelData;
+
 
 
 
@@ -24,17 +28,23 @@ class RelatedController extends Controller
         ]);
     }
 
-        public function create(Request $request)
-        {
-            // dd($request->reference_id);
+    public function create(Request $request)
+    {
+        ExcelData::query()->delete();
+        $relatedData = $request->input('data', []);
+
+        foreach ($relatedData as $data) {
+
             Related::create([
-                'reference_id'=>$request->reference_id,
-                'name'=>$request->name,
-                'code'=>$request->code,
+                'reference_id' => $data['reference_id'],
+                'name' => $data['name'],
+                'code' => $data['code'],
             ]);
-            return redirect()->route('related');
 
         }
+
+        return redirect()->route('related');
+    }
 
 
         public function update(Request $request)
@@ -67,21 +77,43 @@ class RelatedController extends Controller
 
             public function uploadRelated(Request $request)
             {
-                $request->validate([
-                    'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
-                ]);
+                $filePath = session('excelFilePath');
+                $name =$request->name;
+                $code =$request->code;
+                // ExcelData::query()->delete();
+                (new RelatedImport($name,$code))->import($filePath);
 
-            if ($request->file('file')->isValid()) {
-                if ($request->hasFile('file')) {
-                    (new RelatedImport)->import($request->file('file'));
 
-                    return redirect()->back()->with('success', 'Data imported successfully');
-                }
+                return redirect()->route('related') ;
+        }
 
-                return redirect()->back()->with('error', 'Please select a file to upload.');
+
+        public function relatedUploadFile(Request $request)
+        {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
+            ]);
+
+        if ($request->file('file')->isValid()) {
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->storeAs('public', $fileName);
+                session(['excelFilePath' => $filePath]);
+
+                $import = new Import();
+                $importedData = Excel::toCollection($import, $filePath);
+                $firstRow = $importedData->first()->first();
+                $headers = $firstRow->keys()->toArray();
+                // $headers = Excel::toArray(new Import(), $filePath);
+
+                return view('referencemodule::relatedImport',compact('headers'));
             }
 
-            return "Error: Invalid file.";
+            return redirect()->back()->with('error', 'Please select a file to upload.');
         }
+
+        return "Error: Invalid file.";
+    }
 
 }

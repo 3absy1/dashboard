@@ -68,7 +68,7 @@ class Code implements ToModel , WithHeadingRow
             ExcelData::create([
                 'name' => $row[$this->name],
                 'code' => $row[$this->code],
-                'reference_name'=>'Not Found',
+                'reference_name'=>null,
                 'code2'=>null
 
             ]);

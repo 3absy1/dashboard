@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Modules\ReferenceModule\App\Models\Reference;
 use Modules\ReferenceModule\App\Models\Related;
+use Illuminate\Support\Facades\Validator;
 
 class RelatedImport implements ToModel , WithHeadingRow
 {
@@ -18,13 +19,33 @@ class RelatedImport implements ToModel , WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    public$name;
+    public $code;
+
+    public function __construct($name,$code)
+    {
+        $this->name = $name;
+        $this->code = $code;
+
+
+    }
     public function model(array $row)
     {
 
+        $rules = [
+
+            $this->name => 'required',
+            $this->code => 'required|numeric',
+        ];
+
+        $validator = Validator::make($row, $rules);
+        if ($validator->fails()) {
+            return;
+        }
+
         return new Related([
-            'reference_id' => $row['id'],
-            'name' => $row['name'],
-            'code' => $row['code'],
+            'name' =>$row[$this->name],
+            'code' =>$row[$this->code],
         ]);
     }
 }

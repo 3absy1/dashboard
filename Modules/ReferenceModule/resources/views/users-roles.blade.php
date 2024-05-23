@@ -12,7 +12,7 @@
         <!-- ===============================================-->
         <!--    Document Title-->
         <!-- ===============================================-->
-        <title>Phoenix</title>
+        <title>Related | Mapping Tool</title>
 
         @include('main.head-css')
 
@@ -101,12 +101,12 @@
                             </div>
                         </div>
                         </div>
-                        <form action="{{ route('upload.related') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('uploadupload-file-related') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             {{-- <input type="file" name="file"> --}}
                             <div class="col-12 col-lg-12 col-xl-4">
                                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Import Excel</label>
-                                (id, name , code)
+                                ( name , code)
                                 <input class="form-control" name="file" id="mainAdminLogo" type="file" />
                                 <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
                             </div>
@@ -132,19 +132,40 @@
                             <tr>
                                 <td>{{$related->id}}</td>
                                 <td></td>
+                                @if (is_null($related->reference_id))
+                                <td class="text-start">
+                                    <select name="reference_id" class="form-select" aria-label="Select reference">
+                                        <option selected>Not Found</option>
+                                        @foreach ($references as $reference)
+                                            <option value="{{ $reference->id }}">{{ $reference->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                @else
                                 <td class="text-start">{{$related->reference->name}}</td>
+                                @endif
                                 <td class="text-start">{{$related->name}}</td>
                                 <td>{{$related->code}}</td>
 
                                 <td>{{$related->created_at}}</td>
                                 <td class="align-middle text-start white-space-nowrap pe-0 action py-2">
+                                    @if (is_null($related->reference_id))
+                                    <form action="{{ route('related.update','test') }} " method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                    <button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="submit" data-bs-toggle="modal" data-bs-target="#insertModal{{$related->id}}">Insert</button>
+                                    <input type="hidden" class="form-control" name="name" value="{{$related->name}}">
+                                    <input type="hidden" class="form-control" name="code" value="{{$related->code}}">
 
+                                    </form>
+                                    @endif
                                     <div class="font-sans-serif btn-reveal-trigger position-static"><button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="modal" data-bs-target="#editModal{{$related->id}}">Edit</button>
                                         <div class="modal fade" id="editModal{{$related->id}}" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <form action="{{ route('related.update','test') }} " method="POST">
                                                     @csrf
                                                     @method('PUT')
+
                                             <div class="modal-content">
                                                 <div class="modal-header">
 
@@ -164,7 +185,12 @@
                                                 <div class="modal-body">
                                                     <div class="form-floating">
                                                         <select name="reference_id" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                                            @if (is_null($related->reference_id))
+                                                            <option selected >none</option>
+                                                            @else
                                                             <option selected value="{{$related->reference->id}}">{{$related->reference->name}}</option>
+                                                            @endif
+
                                                         @foreach ($references as $reference)
                                                         <option  value="{{$reference->id}}">{{$reference->name}}</option>
 

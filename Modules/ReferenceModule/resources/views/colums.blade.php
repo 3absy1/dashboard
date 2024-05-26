@@ -79,7 +79,7 @@
                         <div class="col-12 col-lg-6 col-xl-4">
                             <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
                             <div class="form-floating">
-                                <select name="name" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <select name="name" class="form-select" id="nameSelect" aria-label="Floating label select example">
                                 @foreach ($headers as $header)
 
                                 <option value="{{$header}}">{{$header}}</option>
@@ -92,7 +92,7 @@
                         <div class="col-12 col-lg-6 col-xl-4">
                             <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="metaName">Code </label>
                             <div class="form-floating">
-                                <select name="code" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <select name="code" class="form-select" id="codeSelect" aria-label="Floating label select example">
                                 @foreach ($headers as $header)
 
                                 <option>{{$header}}</option>
@@ -104,7 +104,7 @@
                         </div>
                         <label >Search Depends Of name and code </label>
                         <div class="form-floating">
-                            <select name="select" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <select name="select" class="form-select" id="selector" aria-label="Floating label select example">
                             <option  value="1">name</option>
                             <option  value="2">code</option>
 
@@ -114,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Save</button></div>
+                    <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
 
                     </div>
                 </form>
@@ -129,7 +129,33 @@
         <!--    End of Main Content-->
         <!-- ===============================================-->
         @include('main.vendor-scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const nameSelect = document.getElementById('nameSelect');
+                const codeSelect = document.getElementById('codeSelect');
+                const headers = @json($headers);
 
+                function updateCodeOptions(selectedName) {
+                    codeSelect.innerHTML = ''; // Clear the code select options
+
+                    headers.forEach(header => {
+                        if (header !== selectedName) {
+                            const option = document.createElement('option');
+                            option.value = header;
+                            option.textContent = header;
+                            codeSelect.appendChild(option);
+                        }
+                    });
+                }
+
+                // Initial population of code options based on initial name selection
+                updateCodeOptions(nameSelect.value);
+
+                nameSelect.addEventListener('change', function () {
+                    updateCodeOptions(nameSelect.value);
+                });
+            });
+        </script>
     </body>
 
     <!-- Mirrored from prium.github.io/phoenix/v1.6.0/apps/e-commerce/admin/customers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Dec 2022 09:36:51 GMT -->

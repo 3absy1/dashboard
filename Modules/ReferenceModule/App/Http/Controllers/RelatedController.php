@@ -10,6 +10,8 @@ use Modules\ReferenceModule\App\Models\Reference;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\ReferenceModule\App\Imports\Import;
 use Modules\ReferenceModule\App\Models\ExcelData;
+use Illuminate\Support\Facades\Validator;
+
 
 
 
@@ -30,17 +32,25 @@ class RelatedController extends Controller
 
     public function create(Request $request)
     {
-        ExcelData::query()->delete();
         $relatedData = $request->input('data', []);
 
-        foreach ($relatedData as $data) {
+        $validator = Validator::make($relatedData, [
+            '*.reference_id' => 'required|not_in:null',
+            '*.name' => 'required|string',
+            '*.code' => 'required|string',
+        ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        ExcelData::query()->delete();
+
+        foreach ($relatedData as $data) {
             Related::create([
                 'reference_id' => $data['reference_id'],
                 'name' => $data['name'],
                 'code' => $data['code'],
             ]);
-
         }
 
         return redirect()->route('related');

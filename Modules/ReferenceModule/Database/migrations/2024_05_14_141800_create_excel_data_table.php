@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('reference_name')->nullable();
-            $table->integer('code2')->nullable();
+            $table->string('code2')->nullable();
             $table->timestamps();
         });
     }

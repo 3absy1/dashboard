@@ -111,11 +111,10 @@
                                 <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
                             </div>
                         </form>
-                        <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
+                        <table id="userAccessTable" class=" responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
                             <thead class="">
                             <tr class="px-2 py-2  text-head">
                                 <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Select</span> </th>
                                 <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Reference Name</span> </th>
                                 <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Related Name</span> </th>
                                 <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Code</span> </th>
@@ -130,8 +129,7 @@
                                 @foreach ( $relateds as $related )
 
                             <tr>
-                                <td>{{$related->id}}</td>
-                                <td></td>
+                                <td>&nbsp;&nbsp;{{$related->id}}</td>
                                 <form action="{{ route('reference.insert','test') }} " method="POST">
                                     @csrf
                                     @method('PUT')
@@ -143,6 +141,9 @@
                                             <option value="{{ $reference->id }}">{{ $reference->name }}</option>
                                         @endforeach
                                     </select>
+                                    @if (count($references) == 0)
+                                    <a class="link-dark" href="reference">Create New Reference </a>
+                                    @endif
                                 </td>
                                 @else
                                 <td class="text-start">{{$related->reference->name}}</td>

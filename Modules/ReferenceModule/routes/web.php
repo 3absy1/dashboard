@@ -28,7 +28,7 @@ Route::get('/reference', [ReferenceModuleController::class,'show'])->name('refer
 Route::get('/reference/create', [ReferenceModuleController::class, 'create'])->name('reference.create');
 Route::put('/reference/{access}', [ReferenceModuleController::class, 'update'])->name('reference.update');
 Route::delete('/reference/{id}', [ReferenceModuleController::class, 'delete'])->name('reference.delete');
-Route::post('/uploadupload-file-reference', [ReferenceModuleController::class, 'referenceUploadFile'])->name('uploadupload-file-reference');
+Route::post('/upload-file-reference', [ReferenceModuleController::class, 'referenceUploadFile'])->name('uploadupload-file-reference');
 Route::post('/upload-reference', [ReferenceModuleController::class, 'uploadReference'])->name('upload.reference');
 Route::get('/show', [ReferenceModuleController::class, 'validAndWaste'])->name('reference.show');
 Route::get('/approve-reference', [ReferenceModuleController::class, 'approveReference'])->name('approve.reference');
@@ -41,7 +41,7 @@ Route::put('/related/{access}', [RelatedController::class, 'update'])->name('rel
 Route::put('/referenceinsert/{id}', [RelatedController::class, 'referenceinsert'])->name('reference.insert');
 Route::delete('/related/{id}', [RelatedController::class, 'delete'])->name('related.delete');
 Route::post('/upload-related', [RelatedController::class, 'uploadRelated'])->name('upload.related');
-Route::post('/uploadupload-file-related', [RelatedController::class, 'relatedUploadFile'])->name('uploadupload-file-related');
+Route::post('/upload-file-related', [RelatedController::class, 'relatedUploadFile'])->name('uploadupload-file-related');
 
 
 Route::post('/upload-file', [ReferenceModuleController::class, 'uploadFile'])->name('upload.file');

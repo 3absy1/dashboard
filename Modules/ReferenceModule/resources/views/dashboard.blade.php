@@ -65,8 +65,7 @@
     <table id="userAccessTable" class="responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
         <thead>
             <tr class="px-2 py-2 text-head">
-                <th class="text-start text-nowrap">ID</th>
-                <th class="align-middle text-nowrap">Select</th>
+                <th class="align-middle text-nowrap">ID</th>
                 <th class="align-middle text-nowrap">Enter Name</th>
                 <th class="align-middle text-nowrap">Enter Code</th>
                 <th class="align-middle text-nowrap">Reference Name</th>
@@ -75,21 +74,39 @@
             </tr>
         </thead>
         <tbody>
+                    @if ($errors->any())
+                    <div class="alert alert" role="alert">
+                                <ul class="text-danger">
+                    @foreach ($errors->all() as $error)
+                        <li>You didn't select Reference Name : ( {{$error}} )</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+                @php
+                $showSubmitButton = false;
+                @endphp
             @foreach ($exceldata as $index => $data)
                 <tr>
-                    <td>{{ $data->id }}</td>
-                    <td></td>
+                    <td>  &nbsp;&nbsp;&nbsp;  {{ $data->id }}</td>
                     <td>{{ $data->name }}</td>
                     <td>{{ $data->code }}</td>
                     @if ($data->reference_name == null)
                         <td class="text-start">
+
                             <select name="data[{{ $index }}][reference_id]" class="form-select" aria-label="Select reference">
-                                <option selected>Not Found</option>
+                                <option selected value="null">Not Found</option>
                                 @foreach ($references as $reference)
                                     <option value="{{ $reference->id }}">{{ $reference->name }}</option>
                                 @endforeach
                             </select>
+                            @if (count($references) == 0)
+                            <a class="link-dark" href="reference">Create New Reference </a>
+                            @endif
                         </td>
+                        @php
+                        $showSubmitButton = true;
+                        @endphp
                     @else
                         <td class="text-start">{{ $data->reference_name }}</td>
                     @endif
@@ -98,6 +115,9 @@
                             <input type="hidden" class="form-control" name="data[{{ $index }}][code]" value="{{ $data->code }}">
                             <input type="hidden" class="form-control" name="data[{{ $index }}][name]" value="{{ $data->name }}">
                         </td>
+                        @php
+                        $showSubmitButton = true;
+                        @endphp
                     @else
                         <td>{{ $data->code2 }}</td>
                     @endif
@@ -106,7 +126,11 @@
             @endforeach
         </tbody>
     </table>
+    <br>
+    @if ($showSubmitButton)
     <button type="submit" class="btn btn-success px-7">Create</button>
+@endif
+
 </form>
 
 

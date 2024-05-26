@@ -41,9 +41,11 @@
                 <!-- data table -->
     <form action="{{ route('related.create') }}" method="POST">
     @csrf
-    <table id="userAccessTable" class="responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
+    <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
         <thead>
             <tr class="px-2 py-2 text-head">
+                <th class="dtr-control"></th>
+                <th ></th>
                 <th class="align-middle text-nowrap">ID</th>
                 <th class="align-middle text-nowrap">Enter Name</th>
                 <th class="align-middle text-nowrap">Enter Code</th>
@@ -74,6 +76,8 @@
                     @endphp
 
                     @endif
+                    <td></td>
+                    <td></td>
                     <td>  &nbsp;&nbsp;&nbsp;  {{ $data->id }}</td>
                     <td>{{ $data->name }}</td>
                     <td>{{ $data->code }}</td>

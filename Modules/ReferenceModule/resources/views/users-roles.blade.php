@@ -63,7 +63,7 @@
                             <div class="font-sans-serif btn-reveal-trigger position-static"><button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <form action="{{ route('related.create') }} " method="GET">
+                                        <form action="{{ route('related.new') }} " method="POST">
                                             @csrf
                                     <div class="modal-content">
                                         <div class="modal-header">

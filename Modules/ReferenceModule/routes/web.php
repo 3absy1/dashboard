@@ -37,6 +37,7 @@ Route::get('/approve-reference', [ReferenceModuleController::class, 'approveRefe
 
 Route::get('related',[RelatedController::class,'index'] )->name('related');
 Route::post('/related/create', [RelatedController::class, 'create'])->name('related.create');
+Route::post('/related/new', [RelatedController::class, 'new'])->name('related.new');
 Route::put('/related/{access}', [RelatedController::class, 'update'])->name('related.update');
 Route::put('/referenceinsert/{id}', [RelatedController::class, 'referenceinsert'])->name('reference.insert');
 Route::delete('/related/{id}', [RelatedController::class, 'delete'])->name('related.delete');

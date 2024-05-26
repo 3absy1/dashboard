@@ -39,6 +39,14 @@ class ReferenceModuleController extends Controller
             // 'relateds' => Related::all()
         ]);
     }
+
+    public function search()
+    {
+        return view('referencemodule::search',[
+            'exceldata' => ExcelData::all(),
+            'references' => Reference::all()
+        ]);
+    }
     public function show()
     {
         return view('referencemodule::users-access',[
@@ -153,16 +161,17 @@ public function validAndWaste()
 
 public function approveReference(Request $request)
 {
-    ValidReference::query()->delete();
-        $referenceData = $request->input('data', []);
-        foreach ($referenceData as $data) {
+    $all=ValidReference::all();
+    foreach ($all as $validReference) {
 
             Reference::create([
-                'name' => $data['name'],
-                'code' => $data['code'],
+                'name' => $validReference['name'],
+                'code' => $validReference['code'],
             ]);
-
         }
+
+        ValidReference::query()->delete();
+
     return redirect()->route('reference');
 }
 
@@ -221,7 +230,7 @@ public function approveReference(Request $request)
 
         }
 
-        return redirect()->route('dashboard') ;
+        return redirect()->route('search') ;
     }
 
 

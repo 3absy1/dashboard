@@ -18,6 +18,15 @@
             </div></a>
         </span>
         </li>
+        <li class="nav-item">
+            <!-- parent pages-->
+            <span class="nav-item-wrapper">
+                <a class="nav-link label-1 {{Request::url() == route('search')? 'active':''}}" href="/search" role="button"  >
+                <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
+                </div><span class="nav-link-icon"><i class="fa-solid fa-display mt-1"></i></span><span class="nav-link-text">Searchs</span>
+            </div></a>
+        </span>
+        </li>
 
 
         </ul>

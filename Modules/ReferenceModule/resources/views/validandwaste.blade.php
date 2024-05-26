@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col">
                     <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-user-lock me-2 fs-0"></span>Valid Reference</h5>
-                    <form action="{{ route('approve.reference') }} " method="GET">
+                    <form action="{{ route('approve.reference') }} " method="POST">
                         @csrf
                     <table id="userAccessTable" class=" responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
                         <thead class="">

@@ -21,6 +21,7 @@ use Modules\ReferenceModule\App\Http\Controllers\RelatedController;
 Route::get('/',[ReferenceModuleController::class,'home'])->name('home');
 
 Route::get('/dashboard',[ReferenceModuleController::class,'index'])->name('dashboard');
+Route::get('/search',[ReferenceModuleController::class,'search'])->name('search');
 
 
 
@@ -31,7 +32,7 @@ Route::delete('/reference/{id}', [ReferenceModuleController::class, 'delete'])->
 Route::post('/upload-file-reference', [ReferenceModuleController::class, 'referenceUploadFile'])->name('uploadupload-file-reference');
 Route::post('/upload-reference', [ReferenceModuleController::class, 'uploadReference'])->name('upload.reference');
 Route::get('/show', [ReferenceModuleController::class, 'validAndWaste'])->name('reference.show');
-Route::get('/approve-reference', [ReferenceModuleController::class, 'approveReference'])->name('approve.reference');
+Route::post('/approve-reference', [ReferenceModuleController::class, 'approveReference'])->name('approve.reference');
 
 
 

@@ -5,7 +5,7 @@
         <a class="navbar-brand me-1 me-sm-3" href="dashboard">
         <div class="d-flex align-items-center">
             <div class="d-flex align-items-center"><img src="assets/img/icons/logo.png" alt="phoenix" width="27" />
-            <p class="logo-text ms-2 d-none d-sm-block">phoenix</p>
+            <p class="logo-text ms-2 d-none d-sm-block">Mapping Tool</p>
             </div>
         </div>
         </a>

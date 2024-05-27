@@ -71,6 +71,7 @@
                     </div>
                 </div>
                 </div>
+                <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Select the headers from the file you uploaded.</label>
 
                 <form method="POST" action="{{ route('import.upload') }}"  enctype="multipart/form-data">
                     @csrf
@@ -102,7 +103,7 @@
                                 <label for="floatingSelect">Headers </label>
                             </div>
                         </div>
-                        <label >Search Depends Of name and code </label>
+                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Check Depends Of name and code</label>
                         <div class="form-floating">
                             <select name="select" class="form-select" id="selector" aria-label="Floating label select example">
                             <option  value="1">name</option>

@@ -45,7 +45,6 @@ class RelatedController extends Controller
         }
         ExcelData::query()->delete();
 
-        dd($relatedData['reference_id']);
         foreach ($relatedData as $data) {
             Related::create([
                 'reference_id' => $data['reference_id'],

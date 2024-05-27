@@ -59,7 +59,7 @@
                         <div class="container px-2 px-md-5"> <div class="align-items-start border-bottom flex-column">
                         <div class="pt-1 w-100 mb-3 d-flex justify-content-between align-items-start">
                             <div>
-                            <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-user-pen fs-0"></span> Related Names</h5>
+                            <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-table fs-0"></span> Related table</h5>
                             <div class="font-sans-serif btn-reveal-trigger position-static"><button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -111,11 +111,10 @@
                                 <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
                             </div>
                         </form>
-                        <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
+                        <table id="userAccessTable" class=" responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
                             <thead class="">
                             <tr class="px-2 py-2  text-head">
-                                <th class="dtr-control"></th>
-                                <th ></th>
+
                                 <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
                                 <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Reference Name</span> </th>
                                 <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Related Name</span> </th>
@@ -131,8 +130,7 @@
                                 @foreach ( $relateds as $related )
 
                             <tr>
-                                <td></td>
-                        <td></td>
+
                                 <td>&nbsp;&nbsp;{{$related->id}}</td>
                                 <form action="{{ route('reference.insert','test') }} " method="POST">
                                     @csrf
@@ -251,7 +249,19 @@
         <!--    End of Main Content-->
         <!-- ===============================================-->
         @include('main.vendor-scripts')
-
+        <script>
+            $(document).ready(function() {
+                $('#userAccessTable').DataTable({
+                    "paging": true,
+                    "pageLength": 10,
+                    "lengthChange": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "searching": true,
+                    "ordering": true
+                });
+            });
+        </script>
     </body>
 
     <!-- Mirrored from prium.github.io/phoenix/v1.6.0/apps/e-commerce/admin/customers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Dec 2022 09:36:51 GMT -->

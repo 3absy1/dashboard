@@ -71,6 +71,7 @@
                     </div>
                 </div>
                 </div>
+                <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Select the headers from the file you uploaded.</label>
 
                 <form method="POST" action="{{ route('upload.related') }}"  enctype="multipart/form-data">
                     @csrf

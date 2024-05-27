@@ -8,10 +8,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
+  <!-- jQuery -->
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <!-- DataTables JS -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
+    <link href="assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
+
+    <link href="assets/css/datatable-bootstrap5.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/responsive-datatable-bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/buttons.bootstrap5.css">
+    <link href="assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
     <title> Reference | Mapping Tool </title>
     @include('main.head-css')
 
@@ -53,7 +66,7 @@
                 <div class="container px-2 px-md-5"> <div class="align-items-start border-bottom flex-column">
                 <div class="pt-1 w-100 mb-3 d-flex justify-content-between align-items-start">
                     <div>
-                    <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-user-lock me-2 fs-0"></span>Reference Names</h5>
+                    <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-table me-2 fs-0"></span>Reference Tabels</h5>
                     <div class="font-sans-serif btn-reveal-trigger position-static"><button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog">
@@ -178,42 +191,6 @@
                     </tbody>
 
                 </table>
-                <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-user-lock me-2 fs-0"></span>Waste Reference Names</h5>
-
-                <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
-                    <thead class="">
-                    <tr class="px-2 py-2  text-head">
-                        <th class="dtr-control"></th>
-                        <th ></th>
-                        <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
-                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort"> Name</span> </th>
-                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Code</span> </th>
-                        <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort"> Reason</span> </th>
-
-                    </tr>
-                </thead>
-
-                    <tbody>
-                        @foreach ( $wastereferences as $wastereference )
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>&nbsp;&nbsp;{{$wastereference->id}}</td>
-                        <td class="text-start">{{$wastereference->name}}</td>
-                        @if ($wastereference->code == null)
-                        <td>Not Found</td>
-                        @else
-                        <td>{{$wastereference->code}}</td>
-                        @endif
-
-                        <td>{{$wastereference->reason}}</td>
-                    </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
             </section>
 
             @include('main.footer')
@@ -225,7 +202,19 @@
         <!--    End of Main Content-->
         <!-- ===============================================-->
         @include('main.vendor-scripts')
-
+        <script>
+            $(document).ready(function() {
+                $('#userAccessTable').DataTable({
+                    "paging": true,
+                    "pageLength": 10,
+                    "lengthChange": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "searching": true,
+                    "ordering": true
+                });
+            });
+        </script>
     </body>
 
     <!-- Mirrored from prium.github.io/phoenix/v1.6.0/apps/e-commerce/admin/customers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Dec 2022 09:36:51 GMT -->

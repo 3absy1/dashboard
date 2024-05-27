@@ -33,7 +33,7 @@
             <div class="px-2 px-md-5"> <div class="align-items-start border-bottom">
                 <div class="pt-1 w-100 mb-3 d-flex justify-content-between align-items-start">
                 <div>
-                    <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-display me-2 fs-0"></span>Dashboard</h5>
+                    <h5 class="mb-2 me-2 lh-sm"><span class="fa-solid fa-file-import me-2 fs-0"></span>Check</h5>
                 </div>
                 </div>
             </div>
@@ -44,6 +44,8 @@
                 {{-- <input type="file" name="file"> --}}
                 <div class="col-12 col-lg-12 col-xl-4">
                     <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Import Excel</label>
+                    <label class="form-label  fs--1 ps-0 text-capitalize  mb-2" for="mainAdminLogo">Here you will upload the file to check if it has a reference or is related or not.</label>
+
                     <input class="form-control" name="file" id="mainAdminLogo" type="file" />
                     <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
 

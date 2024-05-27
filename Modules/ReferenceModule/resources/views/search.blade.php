@@ -55,15 +55,6 @@
             </tr>
         </thead>
         <tbody>
-                    @if ($errors->any())
-                    <div class="alert alert" role="alert">
-                                <ul class="text-danger">
-                    @foreach ($errors->all() as $error)
-                        <li>You didn't select Reference Name : ( {{$error}} )</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
                 @php
                 $showSubmitButton = false;
                 $showExportButton = false;
@@ -93,6 +84,13 @@
                             @if (count($references) == 0)
                             <a class="link-dark" href="reference">Create New Reference </a>
                             @endif
+                            @if ($errors->any())
+                            <div class="alert alert" role="alert">
+                                        <ul class="text-danger">
+                                <li>You didn't select Reference Name</li>
+                        </ul>
+                    </div>
+                @endif
                         </td>
                         @php
                         $showSubmitButton = true;

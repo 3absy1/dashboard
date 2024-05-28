@@ -55,10 +55,14 @@ class ReferenceImport implements ToModel , WithHeadingRow
 
                 ]);
             }elseif (ValidReference::where('code', $row[$this->code])->exists()) {
+                $reference = ValidReference::where('code', $row[$this->code])->first();
+                    $reference->flag = 1;
+                    $reference->save();
+
                 return new WasteReference([
                     'name' =>$row[$this->name],
                     'code' =>$row[$this->code],
-                    'reason'=>"code  must be unique.",
+                    'reason'=>"code must be unique.",
 
                 ]);
             }

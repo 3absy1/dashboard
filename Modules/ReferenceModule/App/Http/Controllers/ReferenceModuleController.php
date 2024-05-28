@@ -110,6 +110,18 @@ class ReferenceModuleController extends Controller
             // ExcelData::query()->delete();
             (new ReferenceImport($name,$code))->import($filePath);
 
+            if(ValidReference::where('flag', 1)){
+                $create=ValidReference::where('flag', 1)->get();
+                foreach ($create as $data) {
+                WasteReference::create([
+                    'name' => $data->name,
+                    'code' => $data->code,
+                    'reason' => 'code is repaided.',
+                ]);
+                $data->delete();
+
+            }
+            }
 
             return redirect()->route('reference.show') ;
     }

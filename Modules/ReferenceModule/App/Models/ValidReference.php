@@ -13,7 +13,7 @@ class ValidReference extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['name', 'code'];
+    protected $fillable = ['name', 'code','flag'];
 
     protected static function newFactory(): ValidReferenceFactory
     {

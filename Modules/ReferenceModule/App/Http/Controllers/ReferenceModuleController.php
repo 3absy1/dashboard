@@ -129,6 +129,8 @@ class ReferenceModuleController extends Controller
 
     public function referenceUploadFile(Request $request)
     {
+        ValidReference::query()->delete();
+        WasteReference::query()->delete();
         $request->validate([
             'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
         ]);

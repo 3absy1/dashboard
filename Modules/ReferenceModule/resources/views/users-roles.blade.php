@@ -146,12 +146,20 @@
                                     @if (count($references) == 0)
                                     <a class="link-dark" href="reference">Create New Reference </a>
                                     @endif
+                                    @if ($errors->any())
+                                    <div class="alert alert" role="alert">
+                                                <ul class="text-danger">
+                                        <li>You didn't select Reference Name</li>
+                                </ul>
+                            </div>
+                        @endif
                                 </td>
                                 @else
                                 <td class="text-start">{{$related->reference->name}}</td>
                                 @endif
                                 <td class="text-start">{{$related->name}}</td>
                                 <td>{{$related->code}}</td>
+
 
                                 <td>{{$related->created_at}}</td>
                                 <td class="align-middle text-start white-space-nowrap pe-0 action py-2">

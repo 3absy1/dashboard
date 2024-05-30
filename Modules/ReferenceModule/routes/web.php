@@ -1,5 +1,6 @@
 <?php
 
+use Modules\ReferenceModule\App\Http\Controllers\MergeController;
 use Illuminate\Support\Facades\Route;
 use Modules\ReferenceModule\App\Http\Controllers\ReferenceModuleController;
 use Modules\ReferenceModule\App\Http\Controllers\RelatedController;
@@ -44,6 +45,13 @@ Route::put('/referenceinsert/{id}', [RelatedController::class, 'referenceinsert'
 Route::delete('/related/{id}', [RelatedController::class, 'delete'])->name('related.delete');
 Route::post('/upload-related', [RelatedController::class, 'uploadRelated'])->name('upload.related');
 Route::post('/upload-file-related', [RelatedController::class, 'relatedUploadFile'])->name('uploadupload-file-related');
+
+
+Route::get('merge',[MergeController::class,'index'] )->name('merge');
+Route::post('/merge-upload-file', [MergeController::class, 'uploadFile'])->name('merge.upload.file');
+Route::post('/merge-file', [MergeController::class, 'uploadMerge'])->name('merge.file');
+Route::get('/merge-show', [MergeController::class, 'show'])->name('merge.show');
+Route::get('/export-merge', [MergeController::class, 'export'])->name('export.merge');
 
 
 Route::post('/upload-file', [ReferenceModuleController::class, 'uploadFile'])->name('upload.file');

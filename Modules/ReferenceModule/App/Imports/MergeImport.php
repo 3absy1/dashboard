@@ -1,0 +1,71 @@
+<?php
+
+namespace Modules\ReferenceModule\App\Imports;
+
+use Modules\ReferenceModule\App\Models\ExcelData;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Modules\ReferenceModule\App\Models\Reference;
+use Illuminate\Support\Facades\Validator;
+use Modules\ReferenceModule\App\Models\Merge;
+use Modules\ReferenceModule\App\Models\ValidReference;
+use Modules\ReferenceModule\App\Models\WasteReference;
+
+class MergeImport implements ToCollection , WithHeadingRow
+{
+    use Importable;
+    /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    public $entry;
+
+
+    public $total;
+
+    public function __construct($entry, $total)
+    {
+        $this->entry = $entry;
+        $this->total = $total;
+
+
+    }
+    public function collection(Collection $rows)
+    {
+        $mergedData = [];
+
+        foreach ($rows as $row) {
+            $entryNumbers = array_map(function($col) use ($row) {
+                return $row[$col];
+            }, $this->entry);
+
+            $entryNumber = implode('-', $entryNumbers);
+
+            $totalAmount = array_sum(array_map(function($col) use ($row) {
+                return $row[$col];
+            }, $this->total));
+
+            if (isset($mergedData[$entryNumber])) {
+                $mergedData[$entryNumber]['total'] += $totalAmount;
+            } else {
+                $mergedData[$entryNumber] = [
+                    'entry_number' => $entryNumber,
+                    'total' => $totalAmount,
+                ];
+            }
+        }
+
+        foreach ($mergedData as $data) {
+            Merge::updateOrCreate(
+                ['entry_number' => $data['entry_number']],
+                ['total' => $data['total']]
+            );
+        }
+    }
+
+
+    }

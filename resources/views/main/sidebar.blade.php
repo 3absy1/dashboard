@@ -36,6 +36,15 @@
             </div></a>
         </span>
         </li>
+        <li class="nav-item">
+            <!-- parent pages-->
+            <span class="nav-item-wrapper">
+                <a class="nav-link label-1 {{Request::url() == route('merge')? 'active':''}} " href="merge" role="button"  >
+                <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
+                </div><span class="nav-link-icon"><i class="fa-solid fa-file mt-1"></i></span><span class="nav-link-text">Merge Table</span>
+            </div></a>
+        </span>
+        </li>
 
 
 

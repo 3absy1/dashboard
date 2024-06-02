@@ -50,7 +50,6 @@ Route::post('/upload-file-related', [RelatedController::class, 'relatedUploadFil
 Route::get('merge',[MergeController::class,'index'] )->name('merge');
 Route::post('/merge-upload-file', [MergeController::class, 'uploadFile'])->name('merge.upload.file');
 Route::post('/merge-file', [MergeController::class, 'uploadMerge'])->name('merge.file');
-Route::get('/merge-show', [MergeController::class, 'show'])->name('merge.show');
 Route::get('/export-merge', [MergeController::class, 'export'])->name('export.merge');
 
 

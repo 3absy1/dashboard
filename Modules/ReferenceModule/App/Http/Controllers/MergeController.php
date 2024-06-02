@@ -57,7 +57,6 @@ class MergeController extends Controller
             });
             $tableName = 'file_table'; // Generate a unique table name
             Schema::create($tableName, function ($table) use ($headers) {
-                $table->increments('id');
                 foreach ($headers as $header) {
                     if (!is_numeric($header)) {
                         $table->string($header)->nullable();
@@ -81,13 +80,7 @@ class MergeController extends Controller
     return "Error: Invalid file.";
 }
 
-public function show()
-{
-    return view('referencemodule::mergeSearch',[
-        'merges' => Merge::all(),
 
-    ]);
-}
 
 public function uploadMerge(Request $request)
 {

@@ -26,7 +26,7 @@
         <div class="content">
             <section class="table-sec pt-3">
                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Select the headers from the file you uploaded.</label>
-                 <label class="form-label  fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">If you choose "Merge", it means these are the headers that will be used for merging. If you choose "Total", it means it will sum them up, so they need to be numeric columns.</label>
+                <label class="form-label  fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">If you choose "Merge", it means these are the headers that will be used for merging. If you choose "Total", it means it will sum them up, so they need to be numeric columns.</label>
 
                 <form method="POST" action="{{ route('merge.file') }}" enctype="multipart/form-data">
                     @csrf
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" id="addEntrySelectButton" class="btn btn-secondary">+ Add Entry</button>
+                    <button type="button" id="addEntrySelectButton" class="btn btn-secondary">+ Add</button>
                     <br><br>
                     <div id="totalSelectContainer">
                         <div class="row g-3 mb-5 select-row">

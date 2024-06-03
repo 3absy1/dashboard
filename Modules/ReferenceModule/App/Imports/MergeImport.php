@@ -51,20 +51,19 @@ class MergeImport implements ToCollection , WithHeadingRow
 
             if (isset($mergedData[$entryNumber])) {
                 $mergedData[$entryNumber]['total'] += $totalAmount;
+                $mergedData[$entryNumber]['rows'][] = $row->toArray(); // Store the rows
+                dd($row->toArray());
+
             } else {
                 $mergedData[$entryNumber] = [
                     'entry_number' => $entryNumber,
                     'total' => $totalAmount,
+                    'rows' => [$row->toArray()], // Initialize array with current row
+
                 ];
             }
         }
 
-        foreach ($mergedData as $data) {
-            Merge::updateOrCreate(
-                ['entry_number' => $data['entry_number']],
-                ['total' => $data['total']]
-            );
-        }
     }
 
 

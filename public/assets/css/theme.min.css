@@ -30457,3 +30457,7 @@ html:not(.navbar-vertical-collapsed)
 .page-container:hover .img-container + .h5 {
   color: #3874ff !important;
 }
+#spinner {
+    width: 1.2rem;
+    height: 1.2rem;
+}

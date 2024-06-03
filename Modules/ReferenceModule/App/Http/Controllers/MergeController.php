@@ -55,7 +55,7 @@ class MergeController extends Controller
             $headers = array_filter($stringHeaders, function($header) {
                 return !is_numeric($header);
             });
-            $tableName = 'file_table'; // Generate a unique table name
+            $tableName = 'file_table';
             Schema::create($tableName, function ($table) use ($headers) {
                 foreach ($headers as $header) {
                     if (!is_numeric($header)) {
@@ -71,6 +71,13 @@ class MergeController extends Controller
 
                 DB::table($tableName)->insert($filteredRow);
             }
+            $totalRows = DB::table($tableName)->where(function ($query) use ($headers) {
+                foreach ($headers as $header) {
+                    $query->whereNotNull($header);
+                }
+            })->count();
+            Session::put('totalRows', $totalRows);
+
             return view('referencemodule::mergeColums',compact('tableName','headers'));
         }
 
@@ -103,9 +110,12 @@ public function uploadMerge(Request $request)
 
     foreach ($entry as $header) {
         $entriesQuery->groupBy($header);
+        $entriesQuery->selectRaw("COUNT(*) as count");
+
     }
 
     $mergedData = $entriesQuery->get();
+
     Session::put('entry', $entry);
     Session::put('total', $total);
     $cacheKey = 'merged_data_' . uniqid();
@@ -113,11 +123,13 @@ public function uploadMerge(Request $request)
 
     // Store cache key in the session
     Session::put('merged_data_cache_key', $cacheKey);
+    $totalRows = Session::get('totalRows');
 
 return view('referencemodule::mergeSearch',[
     'merges' =>  $mergedData,
     'entrys'=>  $entry,
     'total'=>  $total,
+    'totalRows' => $totalRows,
 
 
 ]);

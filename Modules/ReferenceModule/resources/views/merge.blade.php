@@ -14,7 +14,6 @@
     <!-- ===============================================-->
     <title> Merge | Mapping Tool </title>
     @include('main.head-css')
-
 </head>
     <body>
         <!-- ===============================================-->
@@ -39,26 +38,19 @@
             </div>
 
 
-            <form action="{{ route('merge.upload.file') }}" method="POST" enctype="multipart/form-data">
+            <form id="uploadForm" action="{{ route('merge.upload.file') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                {{-- <input type="file" name="file"> --}}
                 <div class="col-12 col-lg-12 col-xl-4">
                     <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="mainAdminLogo">Import Excel</label>
-                    <label class="form-label  fs--1 ps-0 text-capitalize  mb-2" for="mainAdminLogo">Here you will upload the file to merge any dupliacted data in one colum</label>
-
+                    <label class="form-label  fs--1 ps-0 text-capitalize  mb-2" for="mainAdminLogo">Here you will upload the file to merge any duplicated data in one column</label>
                     <input class="form-control" name="file" id="mainAdminLogo" type="file" />
-                    <div class="text-sm-end text-center"><button type="submit" class="btn btn-primary px-7">Import</button></div>
-
+                    <div class="text-sm-end text-center">
+                        <button id="importButton" type="submit" class="btn btn-primary px-7">
+                            Import &nbsp;
+                            <div id="spinner" class="spinner-border text-light" style="display: none;"></div>
+                        </button>
+                    </div>
                 </div>
-                {{-- <div class="form-floating">
-                    <select name="select" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option  value="1">name</option>
-                    <option  value="2">code</option>
-
-
-                    </select>
-                    <label for="floatingSelect">Selector</label>
-                </div> --}}
             </form>
 
                 <!-- data table -->
@@ -85,6 +77,11 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
-
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        var spinner = document.getElementById('spinner');
+        spinner.style.display = 'inline-block'; // Show the spinner when form is submitted
+    });
+</script>
     <!-- Mirrored from prium.github.io/phoenix/v1.6.0/apps/e-commerce/admin/customers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 Dec 2022 09:36:51 GMT -->
     </html>

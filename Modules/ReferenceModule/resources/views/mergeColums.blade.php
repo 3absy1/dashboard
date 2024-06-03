@@ -37,6 +37,7 @@
                                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">Merge</label>
                                 <div class="form-floating">
                                     <select name="entry[]" class="form-select header-select" aria-label="Floating label select example">
+                                        <option selected>Select Header</option>
                                         @foreach ($headers as $header)
                                             <option value="{{$header}}">{{$header}}</option>
                                         @endforeach
@@ -54,6 +55,7 @@
                                 <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">Total</label>
                                 <div class="form-floating">
                                     <select name="total[]" class="form-select header-select" aria-label="Floating label select example">
+                                        <option selected>Select Header</option>
                                         @foreach ($headers as $header)
                                             <option value="{{$header}}">{{$header}}</option>
                                         @endforeach
@@ -75,62 +77,91 @@
 </main>
 @include('main.vendor-scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const addEntrySelectButton = document.getElementById('addEntrySelectButton');
-        const addTotalSelectButton = document.getElementById('addTotalSelectButton');
-        const entrySelectContainer = document.getElementById('entrySelectContainer');
-        const totalSelectContainer = document.getElementById('totalSelectContainer');
-        const headers = @json($headers);
-        const maxHeaders = headers.length;
+ document.addEventListener('DOMContentLoaded', function () {
+    const addEntrySelectButton = document.getElementById('addEntrySelectButton');
+    const addTotalSelectButton = document.getElementById('addTotalSelectButton');
+    const entrySelectContainer = document.getElementById('entrySelectContainer');
+    const totalSelectContainer = document.getElementById('totalSelectContainer');
+    const headers = @json($headers);
+    const maxHeaders = headers.length;
 
-        function addSelect(container, label, name) {
-            const selectCount = container.getElementsByClassName('select-row').length;
-            const totalSelectCount = document.getElementsByClassName('select-row').length;
-            if (totalSelectCount >= maxHeaders) {
-                alert("Cannot create more than " + maxHeaders + " selects in total.");
-                return;
-            }
+    function addSelect(container, label, name) {
+    const selectCount = container.getElementsByClassName('select-row').length;
+    const totalSelectCount = document.getElementsByClassName('select-row').length;
+    if (totalSelectCount >= maxHeaders) {
+        alert("Cannot create more than " + maxHeaders + " selects in total.");
+        return;
+    }
 
-            const newSelectRow = document.createElement('div');
-            newSelectRow.className = 'row g-3 mb-5 select-row';
-            newSelectRow.innerHTML = `
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">${label}</label>
-                    <div class="form-floating">
-                        <select name="${name}[]" class="form-select header-select" aria-label="Floating label select example">
-                            ${headers.map(header => `<option value="${header}">${header}</option>`).join('')}
-                        </select>
-                        <label for="floatingSelect">Headers</label>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-1 col-xl-1 d-flex align-items-center">
-                    <button type="button" class="btn btn-danger btn-sm delete-row">X</button>
-                </div>
-            `;
-            container.appendChild(newSelectRow);
+    const newSelectRow = document.createElement('div');
+    newSelectRow.className = 'row g-3 mb-5 select-row';
+    const availableOptions = headers.filter(header => !Array.from(document.querySelectorAll('.header-select')).map(select => select.value).includes(header));
+    const defaultOption = availableOptions.length > 0 ? availableOptions[0] : '';
 
-            // Add event listener to the delete button
-            newSelectRow.querySelector('.delete-row').addEventListener('click', function () {
-                container.removeChild(newSelectRow);
-            });
-        }
+    newSelectRow.innerHTML = `
+        <div class="col-12 col-lg-6 col-xl-4">
+            <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">${label}</label>
+            <div class="form-floating">
+                <select name="${name}[]" class="form-select header-select" aria-label="Floating label select example">
+                    ${availableOptions.map(header => `<option value="${header}">${header}</option>`).join('')}
+                </select>
+                <label for="floatingSelect">Headers</label>
+            </div>
+        </div>
+        <div class="col-12 col-lg-1 col-xl-1 d-flex align-items-center">
+            <button type="button" class="btn btn-danger btn-sm delete-row">X</button>
+        </div>
+    `;
+    container.appendChild(newSelectRow);
 
-        addEntrySelectButton.addEventListener('click', function () {
-            addSelect(entrySelectContainer, 'Merge', 'entry');
+    // Add event listener to the delete button
+    newSelectRow.querySelector('.delete-row').addEventListener('click', function () {
+        container.removeChild(newSelectRow);
+        updateOptions();
+    });
+
+    // Add event listener to the new select element
+    newSelectRow.querySelector('.header-select').addEventListener('change', updateOptions);
+    updateOptions();
+}
+
+    function updateOptions() {
+        const selectedOptions = Array.from(document.querySelectorAll('.header-select')).map(select => select.value);
+
+        document.querySelectorAll('.header-select').forEach(select => {
+            const currentValue = select.value;
+            select.innerHTML = headers.map(header => {
+                if (selectedOptions.includes(header) && header !== currentValue) {
+                    return `<option value="${header}" disabled>${header}</option>`;
+                }
+                return `<option value="${header}">${header}</option>`;
+            }).join('');
+            select.value = currentValue;
         });
+    }
 
-        addTotalSelectButton.addEventListener('click', function () {
-            addSelect(totalSelectContainer, 'Total', 'total');
-        });
+    addEntrySelectButton.addEventListener('click', function () {
+        addSelect(entrySelectContainer, 'Merge', 'entry');
+    });
 
-        // Add event listener to the existing delete buttons
-        document.querySelectorAll('.delete-row').forEach(function(button) {
-            button.addEventListener('click', function() {
-                const row = this.closest('.select-row');
-                row.parentNode.removeChild(row);
-            });
+    addTotalSelectButton.addEventListener('click', function () {
+        addSelect(totalSelectContainer, 'Total', 'total');
+    });
+
+    // Add event listener to the existing delete buttons
+    document.querySelectorAll('.delete-row').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const row = this.closest('.select-row');
+            row.parentNode.removeChild(row);
+            updateOptions();
         });
     });
+
+    // Add event listener to the existing select elements
+    document.querySelectorAll('.header-select').forEach(function(select) {
+        select.addEventListener('change', updateOptions);
+    });
+});
 </script>
 </body>
 </html>

@@ -14,7 +14,7 @@ use Modules\ReferenceModule\App\Models\Merge;
 use Modules\ReferenceModule\App\Models\ValidReference;
 use Modules\ReferenceModule\App\Models\WasteReference;
 
-class MergeImport implements ToCollection , WithHeadingRow
+class MergeImport implements ToCollection 
 {
     use Importable;
     /**

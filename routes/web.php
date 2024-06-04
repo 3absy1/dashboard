@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\ReferenceModule\App\Http\Controllers\ReferenceModuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ use Illuminate\Support\Facades\Route;
 // Route::get('role', function () {
 //     return view('users-roles');
 // });
+Route::get('/',[ReferenceModuleController::class,'home'])->name('home');

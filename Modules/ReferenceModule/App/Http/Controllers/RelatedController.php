@@ -23,7 +23,7 @@ class RelatedController extends Controller
      */
     public function index()
     {
-        return view('referencemodule::users-roles',[
+        return view('referencemodule::Related.related',[
             'relateds' => Related::all(),
             'references' => Reference::all()
 
@@ -153,7 +153,7 @@ class RelatedController extends Controller
                     return !is_numeric($header);
                 });                // $headers = Excel::toArray(new Import(), $filePath);
 
-                return view('referencemodule::relatedImport',compact('headers'));
+                return view('referencemodule::Related.relatedImport',compact('headers'));
             }
 
             return redirect()->back()->with('error', 'Please select a file to upload.');

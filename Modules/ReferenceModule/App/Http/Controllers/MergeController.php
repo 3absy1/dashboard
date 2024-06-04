@@ -26,13 +26,13 @@ class MergeController extends Controller
      */
     public function index()
     {
-        return view('referencemodule::merge');
+        return view('referencemodule::Merge.merge');
     }
 
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls', // Allow only Excel files
+            'file' => 'required|mimes:xlsx,xls',
         ]);
 
     if ($request->file('file')->isValid()) {
@@ -78,7 +78,7 @@ class MergeController extends Controller
             })->count();
             Session::put('totalRows', $totalRows);
 
-            return view('referencemodule::mergeColums',compact('tableName','headers'));
+            return view('referencemodule::Merge.mergeColums',compact('headers'));
         }
 
         return redirect()->back()->with('error', 'Please select a file to upload.');
@@ -91,12 +91,11 @@ class MergeController extends Controller
 
 public function uploadMerge(Request $request)
 {
-    $tableName = $request->input('tableName');
+    $tableName = 'file_table';
     $entry = $request->input('entry');
     $total = $request->total;
 
     $entriesQuery = DB::table($tableName);
-
 
     foreach ($entry as $header) {
         $entriesQuery->selectRaw($header);
@@ -113,19 +112,17 @@ public function uploadMerge(Request $request)
         $entriesQuery->selectRaw("COUNT(*) as count");
 
     }
-
     $mergedData = $entriesQuery->get();
 
     Session::put('entry', $entry);
     Session::put('total', $total);
     $cacheKey = 'merged_data_' . uniqid();
-    Cache::put($cacheKey, $mergedData, now()->addMinutes(30)); // Cache for 30 minutes
-
+ Cache::put($cacheKey, $mergedData, now()->addMinutes(30));
     // Store cache key in the session
     Session::put('merged_data_cache_key', $cacheKey);
     $totalRows = Session::get('totalRows');
 
-return view('referencemodule::mergeSearch',[
+return view('referencemodule::Merge.mergeSearch',[
     'merges' =>  $mergedData,
     'entrys'=>  $entry,
     'total'=>  $total,

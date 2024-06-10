@@ -1,7 +1,23 @@
-![Screenshot 2024-05-16 153426](https://github.com/3absy1/dashboard/assets/102052336/43090ff5-6ef8-4df4-93d8-048c5388768f)
-![Screenshot 2024-05-16 153507](https://github.com/3absy1/dashboard/assets/102052336/e8916fca-1699-49fe-b0df-3a04781aa369)
-![Screenshot 2024-05-16 153537](https://github.com/3absy1/dashboard/assets/102052336/9502f4e8-b7dc-4446-99c0-418283e6a48a)
-![Screenshot 2024-05-16 153524](https://github.com/3absy1/dashboard/assets/102052336/2eff7e5b-2244-4bfc-b6b1-994f2d634934)
+Check Page :
+![Screenshot 2024-06-10 122409](https://github.com/3absy1/dashboard/assets/102052336/63020f8d-c432-48c4-ad1f-866b5c39e1e0)
+![Screenshot 2024-06-10 123125](https://github.com/3absy1/dashboard/assets/102052336/9f0f56fd-0cac-4489-abff-3a45f24ee8de)
+![Screenshot 2024-06-10 123250](https://github.com/3absy1/dashboard/assets/102052336/1a4a5ccb-d9bf-4cd0-ae9c-568f3b278ab3)
+
+References Page :
+
+![Screenshot 2024-06-10 122519](https://github.com/3absy1/dashboard/assets/102052336/f85b25d9-c617-474a-8255-3a941a9f0d0a)
+![Screenshot 2024-06-10 122555](https://github.com/3absy1/dashboard/assets/102052336/46e094f4-a629-47ca-b88a-5deceb590d08)
+![Screenshot 2024-06-10 122702](https://github.com/3absy1/dashboard/assets/102052336/58c3de51-026b-440e-b2a3-0cb3ca30b0b5)
+
+Related Page :
+![Screenshot 2024-06-10 122753](https://github.com/3absy1/dashboard/assets/102052336/5858301f-7b1d-4457-b69f-5d1ee8e61ff5)
+![Screenshot 2024-06-10 122729](https://github.com/3absy1/dashboard/assets/102052336/cb206f53-1bbe-4cb0-9be9-c1d1d40efb33)
+
+Merge Page:
+
+![Screenshot 2024-06-10 122807](https://github.com/3absy1/dashboard/assets/102052336/0031aea6-42f1-4c46-b2cd-e52c787d7425)
+![Screenshot 2024-06-10 123009](https://github.com/3absy1/dashboard/assets/102052336/06ca7339-bd74-4d34-8e24-ca786fb0aaa5)
+![Screenshot 2024-06-10 123057](https://github.com/3absy1/dashboard/assets/102052336/47912549-d566-4c9a-b481-8c579eaeb6ca)
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>

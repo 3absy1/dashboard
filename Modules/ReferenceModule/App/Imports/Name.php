@@ -2,7 +2,7 @@
 
 namespace Modules\ReferenceModule\App\Imports;
 
-use Modules\ReferenceModule\App\Models\ExcelData;
+use Modules\ReferenceModule\App\Models\CheckData;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Modules\ReferenceModule\App\Models\Reference;
@@ -11,26 +11,24 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Validator;
 
 
-class Name implements ToModel , WithHeadingRow
+class Name implements ToModel, WithHeadingRow
 {
     use Importable;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
 
 
-    */
+     */
 
-    public$name;
+    public $name;
     public $code;
 
-    public function __construct($name,$code)
+    public function __construct($name, $code)
     {
         $this->name = $name;
         $this->code = $code;
-
-
     }
 
     public function model(array $row)
@@ -48,41 +46,45 @@ class Name implements ToModel , WithHeadingRow
 
 
         $reference = Reference::where('name', $row[$this->name])->first();
+        $related = Related::where('name', $row[$this->name])->first();
 
         if ($reference) {
-            ExcelData::create([
+            CheckData::create([
                 'name' => $row[$this->name],
-                'code' => $row[$this->code] ,
-                'reference_name'=>$reference->name,
-                'code2'=>$reference->code
+                'code' => $row[$this->code],
+                'reference_name' => $reference->name,
+                'code2' => $reference->code,
             ]);
 
-        } else {
-            $related = Related::where('name', $row[$this->name])->first();
+            $excel = CheckData::where('code', $row[$this->code])->first();
+            $excel->type = 'reference';
+            $excel->save();
 
-            if ($related) {
-                $reference = Reference::find($related->reference_id);
+        }
 
-                if ($reference) {
-                    ExcelData::create([
+        if ($related) {
+                $referenceOfrelated = Reference::find($related->reference_id);
+
+                    CheckData::create([
                         'name' => $row[$this->name],
                         'code' => $row[$this->code],
-                        'reference_name'=>$reference->name,
-                        'code2'=>$reference->code
+                        'reference_name' => $referenceOfrelated ? $referenceOfrelated->name : 'N/A',
+                        'code2' => $referenceOfrelated ? $referenceOfrelated->code : 'N/A',
                     ]);
-                }
-            }else{
-            ExcelData::create([
-                'name' => $row[$this->name],
-                'code' => $row[$this->code] ,
-                'reference_name'=>null,
-                'code2'=>null
 
-            ]);
-        }
+                    $excel = CheckData::where('code', $row[$this->code])->first();
+                    $excel->type = 'related';
+                    $excel->save();
+
+            } else {
+                CheckData::create([
+                    'name' => $row[$this->name],
+                    'code' => $row[$this->code],
+                    'reference_name' => null,
+                    'code2' => null,
+                    'type' => null
+                ]);
+            }
         }
     }
 
-
-
-}

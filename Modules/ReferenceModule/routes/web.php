@@ -3,7 +3,7 @@
 use Modules\ReferenceModule\App\Http\Controllers\MergeController;
 use Illuminate\Support\Facades\Route;
 use Modules\ReferenceModule\App\Http\Controllers\CheckController;
-use Modules\ReferenceModule\App\Http\Controllers\ReferenceModuleController;
+use Modules\ReferenceModule\App\Http\Controllers\ReferenceController;
 use Modules\ReferenceModule\App\Http\Controllers\RelatedController;
 
 /*
@@ -21,39 +21,52 @@ use Modules\ReferenceModule\App\Http\Controllers\RelatedController;
 //     Route::resource('referencemodule', ReferenceModuleController::class)->names('referencemodule');
 // });
 
-        Route::get('/check',[CheckController::class,'index'])->name('check');
-        Route::get('/search',[CheckController::class,'search'])->name('search');
-        Route::post('/upload-file', [CheckController::class, 'uploadFile'])->name('upload.file');
-        Route::post('/import', [CheckController::class, 'upload'])->name('import.upload');
-        Route::get('/export', [CheckController::class, 'export'])->name('export.data');
 
+Route::prefix('checkPage')->group(function () {
+    Route::get('/',[CheckController::class,'index'])->name('check.index');
+    Route::get('/search',[CheckController::class,'search'])->name('check.search');
+    Route::post('/match-columns', [CheckController::class, 'matchColumns'])->name('check.matchColumns');
+    Route::post('/import', [CheckController::class, 'import'])->name('check.import');
+    Route::get('/export', [CheckController::class, 'export'])->name('check.export');
 
-        Route::get('/reference', [ReferenceModuleController::class,'show'])->name('reference');
-        Route::get('/reference/create', [ReferenceModuleController::class, 'create'])->name('reference.create');
-        Route::put('/reference/{access}', [ReferenceModuleController::class, 'update'])->name('reference.update');
-        Route::delete('/reference/{id}', [ReferenceModuleController::class, 'delete'])->name('reference.delete');
-        Route::post('/upload-file-reference', [ReferenceModuleController::class, 'referenceUploadFile'])->name('upload-file-reference');
-        Route::post('/upload-reference', [ReferenceModuleController::class, 'uploadReference'])->name('upload.reference');
-        Route::get('/show', [ReferenceModuleController::class, 'validAndWaste'])->name('reference.show');
-        Route::post('/approve-reference', [ReferenceModuleController::class, 'approveReference'])->name('approve.reference');
-        Route::get('/waste', [ReferenceModuleController::class, 'wasteexport'])->name('export.waste');
+});
 
+Route::prefix('referencePage')->group(function () {
 
+        Route::get('/', [ReferenceController::class,'index'])->name('reference.index');
+        Route::get('/create', [ReferenceController::class, 'create'])->name('reference.create');
+        Route::put('/{reference}', [ReferenceController::class, 'update'])->name('reference.update');
+        Route::get('/{reference}/edit', [ReferenceController::class, 'edit'])->name('reference.edit');
+        Route::delete('/{id}', [ReferenceController::class, 'delete'])->name('reference.delete');
+        Route::post('/import-file', [ReferenceController::class, 'importFile'])->name('reference.import-File');
+        Route::post('/upload-reference', [ReferenceController::class, 'uploadReference'])->name('upload.reference');
+        Route::get('/validAndWaste', [ReferenceController::class, 'validAndWaste'])->name('reference.valid-Waste');
+        Route::post('/reference-approve', [ReferenceController::class, 'RreferenceApprove'])->name('reference.approve');
+        Route::get('/export', [ReferenceController::class, 'export'])->name('reference.export');
 
-        Route::get('related',[RelatedController::class,'index'] )->name('related');
-        Route::post('/related/create', [RelatedController::class, 'create'])->name('related.create');
-        Route::post('/related/new', [RelatedController::class, 'new'])->name('related.new');
-        Route::put('/related/{access}', [RelatedController::class, 'update'])->name('related.update');
-        Route::put('/referenceinsert/{id}', [RelatedController::class, 'referenceinsert'])->name('reference.insert');
-        Route::delete('/related/{id}', [RelatedController::class, 'delete'])->name('related.delete');
-        Route::post('/upload-related', [RelatedController::class, 'uploadRelated'])->name('upload.related');
-        Route::post('/upload-file-related', [RelatedController::class, 'relatedUploadFile'])->name('uploadupload-file-related');
+    });
 
+    Route::prefix('relatedPage')->group(function () {
 
-        Route::get('merge',[MergeController::class,'index'] )->name('merge');
-        Route::post('/merge-upload-file', [MergeController::class, 'uploadFile'])->name('merge.upload.file');
-        Route::post('/merge-file', [MergeController::class, 'uploadMerge'])->name('merge.file');
-        Route::get('/export-merge', [MergeController::class, 'export'])->name('export.merge');
+        Route::get('/',[RelatedController::class,'index'] )->name('related.index');
+        Route::post('/create', [RelatedController::class, 'create'])->name('related.create');
+        // Route::post('/related/new', [RelatedController::class, 'checkcreate'])->name('related.new');
+        Route::put('/{related}', [RelatedController::class, 'update'])->name('related.update');
+        Route::get('/{related}/edit', [RelatedController::class, 'edit'])->name('related.edit');
+        // Route::put('/referenceinsert/{id}', [RelatedController::class, 'referenceinsert'])->name('reference.insert');
+        Route::delete('/{id}', [RelatedController::class, 'delete'])->name('related.delete');
+        Route::post('/import-file', [RelatedController::class, 'importFile'])->name('related-import');
+        Route::post('/related-upload', [RelatedController::class, 'relatedUpload'])->name('related-upload');
 
+    });
 
+    Route::prefix('mergePage')->group(function () {
+
+        Route::get('/',[MergeController::class,'index'] )->name('merge.index');
+        Route::post('/import-file', [MergeController::class, 'importfile'])->name('merge.import');
+        Route::post('/merge-upload', [MergeController::class, 'mergeUpload'])->name('merge.upload');
+        Route::get('/merge-file',[MergeController::class,'merge'] )->name('merge.file');
+        Route::get('/export', [MergeController::class, 'export'])->name('merge.export');
+
+    });
 

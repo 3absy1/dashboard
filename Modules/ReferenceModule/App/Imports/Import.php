@@ -2,7 +2,6 @@
 
 namespace Modules\ReferenceModule\App\Imports;
 
-use Modules\ReferenceModule\App\Models\ExcelData;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -23,6 +22,6 @@ class Import implements ToCollection , WithHeadingRow
     {
 
         return $rows->first();
-    
+
     }
 }

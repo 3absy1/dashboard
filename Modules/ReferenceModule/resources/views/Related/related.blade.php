@@ -1,159 +1,232 @@
 @extends('main.app')
 @section('title')
-Related | Mapping Tool
+    Related | Mapping Tool
 @endsection
 @section('css')
 @endsection
 @section('content')
-                    <section class="table-sec pt-3">
-                        <div class="container px-2 px-md-5">
-                            <div class="align-items-start border-bottom flex-column">
-                                <x-referencemodule::first-head label="Related table" />
-                        <x-referencemodule::modal
-                        buttonText="Create"
-                        modalId="exampleModal"
-                        formAction="{{ route('related.new') }}"
-                        formMethod="POST"
-                        modalTitle="Create Name"
-                            >
-                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="code"> Code </label>
-                        <input class="form-control" id="code" type="text" name="code" placeholder="1234" required />
-                                            <br>
-                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
-                        <input class="form-control" id="adminTitle" name="name" type="text" placeholder="Ahmed" required />
-                                <br>
-                        <x-referencemodule::form_related-selector selectName="reference_id"
-                        label="Reference Names"
-                        :options="$references"
-                        selectedOptionLabel="select a reference"
-                        selectedOptionValue=""
-                        />
-                    </x-referencemodule::modal>
+    <section class="table-sec pt-3">
+        <div class="container px-2 px-md-5">
+            <div class="align-items-start border-bottom flex-column">
+                <x-referencemodule::first-head label="Related table" icon="table" />
+                <button class="btn-primary btn  border"
+                type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>
+                <x-referencemodule::modal modalId="exampleModal" formAction="{{ route('related.create') }}"
+                    formMethod="POST" modalTitle="Create Name">
+                    <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="code"> Code </label>
+                    <input class="form-control" id="code" type="text" name="code" placeholder="1234" required />
                     <br>
-                        </div>
-                        <x-referencemodule::import-form action="{{ route('uploadupload-file-related') }}" method="POST">
-                            (name , code)
-                        </x-referencemodule::import-form>
-                        <table id="userAccessTable" class="useDataTable responsive table fs--1 mb-0 bg-white my-3 rounded-2 shadow" style="width:100%">
-                            <thead class="">
-                            <tr class="px-2 py-2  text-head">
-                                <th class="dtr-control"></th>
-                                <th ></th>
-                                <th> #</th>
-                                <th class="text-start  text-nowrap"><span class="prevent-sort"><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Staff .No info"></i> </span><span  class="prevent-sort">ID</span></th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Reference Name</span> </th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Related Name</span> </th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Email Address info"></i></span> <span  class="prevent-sort">Code</span> </th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort">Created At</span> </th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort">Edit</span> </th>
-                                <th class=" align-middle text-nowrap"><span class="prevent-sort "><i  class="fa-solid fa-circle-info fs-0 px-1  prevent-sort border-0 outline-none" data-bs-placement="top" tabindex="0"  data-bs-toggle="popover" data-bs-trigger="focus" title="" data-bs-content="Created At info"></i></span><span  class="prevent-sort">Delete</span> </th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                @php $count = 1; @endphp
-                                @foreach ( $relateds as $related )
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>&nbsp;&nbsp;{{ $count++ }}</td>
-                                <td>&nbsp;&nbsp;{{$related->id}}</td>
-                                <form action="{{ route('reference.insert','test') }} " method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                @if (is_null($related->reference_id))
-                                <td class="text-start">
-                                    <select name="reference_id" class="form-select" aria-label="Select reference">
-                                        <option selected>Not Found</option>
+                    <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
+                    <input class="form-control" id="adminTitle" name="name" type="text" placeholder="Ahmed"
+                        required />
+                    <br>
+                    <x-referencemodule::form_related-selector selectName="reference_id" label="Reference Names"
+                        :options="$references" selectedOptionLabel="select a reference" selectedOptionValue="" />
+                </x-referencemodule::modal>
+                <br>
+            </div>
+            <x-referencemodule::import-form action="{{ route('related-import') }}" method="POST">
+                (name , code , reference)
+            </x-referencemodule::import-form>
+            <div class="card">
+                <div class="container">
+                    <div class="card-body">
+
+                        @foreach ($relateds as $related)
+                        <x-referencemodule::modal  modalId="editModal{{ $related->id }}"
+                            formAction="{{ route('related.update', ['related' => $related->id]) }}" formMethod="POST" modalTitle="Edit Name">
+                            @method('PUT')
+                            <div class="modal-body">
+                                <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">
+                                    Code </label>
+                                <input class="form-control" id="code" type="text" name="code"
+                                    value="{{ $related->code }}" />
+                                <input type="hidden" class="form-control" name="id" value="{{ $related->id }}">
+
+                                <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle">
+                                    Name </label>
+                                <input class="form-control" id="adminTitle" name="name" type="text"
+                                    value="{{ $related->name }}" />
+                                <br>
+                                <div class="form-floating">
+                                    <select name="reference_id" class="form-select" id="floatingSelect"
+                                        aria-label="Floating label select example">
+                                        @if (is_null($related->flag))
+                                            <option selected value="">none</option>
+                                        @else
+                                            <option selected value="{{ $related->reference->id }}">
+                                                {{ $related->reference->name }}</option>
+                                        @endif
+
                                         @foreach ($references as $reference)
                                             <option value="{{ $reference->id }}">{{ $reference->name }}</option>
                                         @endforeach
+
                                     </select>
-                                    @if (count($references) == 0)
-                                    <a class="link-dark" href="reference">Create New Reference </a>
-                                    @endif
-                                    @if ($errors->any())
-                                    <div class="alert alert" role="alert">
-                                                <ul class="text-danger">
-                                        <li>You didn't select Reference Name</li>
-                                    </ul>
-                                    </div>
-                                    @endif
-                                </td>
-                                @else
-                                <td class="text-start">{{$related->reference->name}}</td>
-                                @endif
-                                <td class="text-start">{{$related->name}}</td>
-                                <td>{{$related->code}}</td>
-                                <td>{{$related->created_at}}</td>
-                                <td class="align-middle text-start white-space-nowrap pe-0 action py-2">
-                                    @if (is_null($related->reference_id))
-                                        <input type="hidden" class="form-control" name="id" value="{{$related->id}}">
-                                    <button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="submit" data-bs-toggle="modal" data-bs-target="#insertModal{{$related->id}}">Insert</button>
-                                    </form>
-                                    @endif
-                                    <x-referencemodule::modal
-                                    buttonText="Edit"
-                                    modalId="editModal{{$related->id}}"
-                                    formAction="{{ route('related.update','test') }}"
-                                    formMethod="POST"
-                                    modalTitle="Edit Name"
-                                        >
-                                        @method('PUT')
-                                        <div class="modal-body">
-                                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Code </label>
-                                        <input class="form-control" id="code" type="text" name="code" value="{{$related->code}}" />
-                                        <input type="hidden" class="form-control" name="id" value="{{$related->id}}">
+                                    <label for="floatingSelect">Reference Names</label>
+                                </div>
+                            </div>
+                        </x-referencemodule::modal>
+                        <x-referencemodule::modal modalId="deleteModal{{ $related->id }}"
+                            formAction="{{ route('related.delete', $related->id) }}" formMethod="POST"
+                            modalTitle="Delete {{$related->name}}">
+                            @method('DELETE')
+                            <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Are
+                                You Sure ? </label>
+                        </x-referencemodule::modal>
+                        @endforeach
+                        {{ $dataTable->table(['class' => 'table  table-striped table-bordered table-sm fs--1 mb-0']) }}
+                    </div>
+                </div>
+            </div>
+    </section>
 
-                                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Name </label>
-                                        <input class="form-control" id="adminTitle" name="name" type="text" value="{{$related->name}}" />
-                                        <br>
-                                        <div class="form-floating">
-                                            <select name="reference_id" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                                @if (is_null($related->reference_id))
-                                                <option selected >none</option>
-                                                @else
-                                                <option selected value="{{$related->reference->id}}">{{$related->reference->name}}</option>
-                                                @endif
-
-                                            @foreach ($references as $reference)
-                                            <option  value="{{$reference->id}}">{{$reference->name}}</option>
-
-                                            @endforeach
-
-                                            </select>
-                                            <label for="floatingSelect">Reference Names</label>
-                                        </div>
-                                        </div>
-                                        </x-referencemodule::modal>
-                                </td>
-                                <td>
-                                    <x-referencemodule::modal
-                                    buttonText="Delete"
-                                    modalId="deleteModal{{$related->id}}"
-                                    formAction="{{ route('related.delete', $related->id) }}"
-                                    formMethod="POST"
-                                    modalTitle="Delete Name"
-                                        >
-                                        @method('DELETE')
-                                        <label class="form-label text-1000 fs-0 ps-0 text-capitalize lh-sm mb-2" for="adminTitle"> Are You Sure ? </label>
-                                </x-referencemodule::modal>
-                                </td>
-                            </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </section>
+    <script>
+        $(document).ready(function() {
+            $('#userAccessTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "lengthChange": true,
+                "info": true,
+                "autoWidth": false,
+                "searching": true,
+                "ordering": true
+            });
+        });
+    </script>
         <script>
-            $(document).ready(function() {
-                $('#userAccessTable').DataTable({
-                    "paging": true,
-                    "pageLength": 10,
-                    "lengthChange": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "searching": true,
-                    "ordering": true
+            $(document).on('click', '.editRelated', function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '/reference/' + id + '/edit',
+                    method: 'GET',
+                    success: function(response) {
+                        // Populate the modal fields with the response data
+                        $('#code' + id).val(response.code);
+                        $('#adminTitle' + id).val(response.name);
+                        $('#editModal' + id).modal('show');
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
                 });
             });
         </script>
+@endsection
+
+@section('js')
+
+
+<script>
+    var columnTitleArr = window.columnTitleArr = [];
+
+    window.createExportModalElements = function() {
+        const exportModal = document.querySelector('.export-modal');
+
+        columnTitleArr.forEach(element => {
+            const div = document.createElement('div');
+            div.classList.add('form-check');
+            div.classList.add('col-5');
+
+            const input = document.createElement('input');
+            input.classList.add('form-check-input');
+            input.type = 'checkbox';
+            input.id = element;
+            input.value = element;
+
+            const label = document.createElement('label');
+            label.classList.add('form-check-label');
+            label.setAttribute('for', element);
+            label.textContent = element;
+
+            div.appendChild(input);
+            div.appendChild(label);
+
+            exportModal.appendChild(div);
+        });
+    }
+    $('#related_table').on('page.dt', function() {
+        $('.selected-item').text(window.LaravelDataTables['related_table'].rows({
+            selected: true
+        }).count());
+        $('.selected-badge').text(window.LaravelDataTables['related_table'].rows({
+            selected: true
+        }).count());
+    });
+
+    var arrOfFilterBtn = [];
+    var searchValues = [];
+
+
+    // Select all th elements inside the thead of the table and skip the first two
+    $('.useDataTable thead tr th').slice(1, -1).each(function(index) {
+        var id = 'checkbox_' + index;
+        // Get the inner text of the th element and push it to thTextArray
+        arrOfFilterBtn.push({
+            text: () => {
+                return `<div class="d-flex align-items-center"> <input class="me-2" id="${id}" type="checkbox">
+        <label for=""${id}"">  ${$(this).text()}  <label>
+
+        </div>`
+            },
+            action: function(e, dt, node, config, cb) {
+                var buttonElement = $(this.node());
+                $('#' + id).prop('checked', function(_, oldProp) {
+                    if (oldProp) {
+                        window.LaravelDataTables['related_table'].columns(index +
+                            2).search(
+                            "").draw();
+                        searchValues = searchValues.filter(item => item.Column_No !==
+                            index + 2);
+                    }
+                    return !oldProp;
+                });
+            }
+        });
+    });
+    function getCheckedCheckboxes() {
+            const exportModal = document.querySelector('.export-modal');
+            const checkboxes = exportModal.querySelectorAll('.form-check-input');
+            const checkedCheckboxes = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedCheckboxes.push(checkbox.value);
+                }
+            });
+            return checkedCheckboxes;
+        }
+
+        let exportFormat;
+        $(document).on("click", "#excelModalBtn", function() {
+            exportFormat = $(this).data("exportformat");
+        });
+
+        $(document).on("click", "#pdfModalBtn", function() {
+            exportFormat = $(this).data("exportformat");
+        });
+
+        $(document).on("click", "#csvModalBtn", function() {
+            exportFormat = $(this).data("exportformat");
+        });
+
+        $(document).on('click','.exportSelected',function() {
+            let SelectedRows = JSON.parse(localStorage.getItem('related_checkBoxIdsArray'));
+            $("#SelectedRows").val(SelectedRows);
+        });
+        $(document).on("click", "#sendRequestBtn", function() {
+            let selectedColumns = getCheckedCheckboxes();
+            $("#exportFormatInput").val(exportFormat);
+            $("#selectedColumnsInput").val(selectedColumns);
+            $("#exportModalForm").submit();
+        });
+
+
+</script>
+{!! str_replace(
+    '"DataTable.render.select()"',
+    'DataTable.render.select()',
+    $dataTable->scripts(attributes: ['type' => 'module']),
+) !!}
+
+    {{-- Generating Link Request --}}
 @endsection

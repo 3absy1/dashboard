@@ -12,7 +12,7 @@
             <li class="nav-item">
             <!-- parent pages-->
             <span class="nav-item-wrapper">
-                <a class="nav-link label-1 {{Request::url() == route('check')? 'active':''}}" href="/check" role="button"  >
+                <a class="nav-link label-1 {{Request::url() == route('check.index') || Request::url() == route('check.search') || Request::url() == route('check.matchColumns')? 'active':''}}" href="{{ route('check.index') }}" role="button"  >
                 <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
                 </div><span class="nav-link-icon"><i class="fa-solid fa-upload mt-1"></i></span><span class="nav-link-text">Check Page</span>
             </div></a>
@@ -21,7 +21,7 @@
         <li class="nav-item">
             <!-- parent pages-->
             <span class="nav-item-wrapper">
-                <a class="nav-link label-1 {{Request::url() == route('reference')? 'active':''}}" href="reference" role="button"  >
+                <a class="nav-link label-1 {{Request::url() == route('reference.index') || Request::url() == route('reference.import-File') || Request::url() == route('reference.valid-Waste') ? 'active':''}}" href="{{ route('reference.index') }}" role="button"  >
                 <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
                 </div><span class="nav-link-icon"><i class="fa-solid fa-database mt-1"></i></span><span class="nav-link-text">References Table</span>
             </div></a>
@@ -30,7 +30,7 @@
         <li class="nav-item">
             <!-- parent pages-->
             <span class="nav-item-wrapper">
-                <a class="nav-link label-1 {{Request::url() == route('related')? 'active':''}} " href="related" role="button"  >
+                <a class="nav-link label-1 {{Request::url() == route('related.index') || Request::url() == route('related-import') ? 'active':''}} " href="{{ route('related.index') }}" role="button"  >
                 <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
                 </div><span class="nav-link-icon"><i class="fa-solid fa-table mt-1"></i></span><span class="nav-link-text">Related Table</span>
             </div></a>
@@ -39,7 +39,7 @@
         <li class="nav-item">
             <!-- parent pages-->
             <span class="nav-item-wrapper">
-                <a class="nav-link label-1 {{Request::url() == route('merge')? 'active':''}} " href="merge" role="button"  >
+                <a class="nav-link label-1 {{Request::url() == route('merge.index') || Request::url() == route('merge.import') || Request::url() == route('merge.upload') || Request::url() == route('merge.file') ? 'active':''}}  " href="{{ route('merge.index') }}" role="button"  >
                 <div class="d-flex align-items-center"><div class="dropdown-indicator-icon">
                 </div><span class="nav-link-icon"><i class="fa-solid fa-file mt-1"></i></span><span class="nav-link-text">Merge Table</span>
             </div></a>

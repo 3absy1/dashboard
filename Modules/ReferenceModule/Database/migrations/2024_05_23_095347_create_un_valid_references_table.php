@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('related', function (Blueprint $table) {
+        Schema::create('un_valid_references', function (Blueprint $table) {
             $table->id();
-            $table->string('reference_id')->nullable();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->string('flag')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('related');
+        Schema::dropIfExists('unvalid_references');
     }
 };

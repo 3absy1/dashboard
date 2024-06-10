@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('related', function (Blueprint $table) {
+        Schema::create('check_data', function (Blueprint $table) {
             $table->id();
-            $table->string('reference_id')->nullable();
+            $table->string('code');
             $table->string('name');
-            $table->string('code')->unique();
-            $table->string('flag')->nullable();
+            $table->string('reference_name')->nullable();
+            $table->string('code2')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('related');
+        Schema::dropIfExists('check_data');
     }
 };

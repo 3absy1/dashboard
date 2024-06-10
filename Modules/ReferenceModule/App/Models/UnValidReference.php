@@ -4,19 +4,14 @@ namespace Modules\ReferenceModule\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\ReferenceModule\App\Models\Reference;
 
-class Related extends Model
+class UnValidReference extends Model
 {
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['name', 'reference_id','code','flag'];
+    protected $fillable = ['name','code','reason'];
 
-    public function reference()
-    {
-        return $this->belongsTo(Reference::class);
-    }
 }

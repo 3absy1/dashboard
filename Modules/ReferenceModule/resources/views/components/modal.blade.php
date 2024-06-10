@@ -1,8 +1,6 @@
-@props(['buttonText', 'modalId', 'formAction', 'formMethod' => 'POST', 'modalTitle'])
+@props(['modalId', 'formAction', 'formMethod' => 'POST', 'modalTitle'])
 
 <div class="font-sans-serif btn-reveal-trigger position-static">
-    <button class="success btn btn-md border bg-light dropdown-toggle dropdown-caret-none transition-none btn-reveal"
-            type="button" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">{{ $buttonText }}</button>
     <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form action="{{ $formAction }}" method="{{ $formMethod }}">

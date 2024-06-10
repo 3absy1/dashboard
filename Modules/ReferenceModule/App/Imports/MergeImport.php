@@ -2,26 +2,21 @@
 
 namespace Modules\ReferenceModule\App\Imports;
 
-use Modules\ReferenceModule\App\Models\ExcelData;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Modules\ReferenceModule\App\Models\Reference;
-use Illuminate\Support\Facades\Validator;
-use Modules\ReferenceModule\App\Models\Merge;
-use Modules\ReferenceModule\App\Models\ValidReference;
-use Modules\ReferenceModule\App\Models\WasteReference;
 
-class MergeImport implements ToCollection 
+
+class MergeImport implements ToCollection
 {
     use Importable;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public $entry;
 
 
@@ -31,21 +26,19 @@ class MergeImport implements ToCollection
     {
         $this->entry = $entry;
         $this->total = $total;
-
-
     }
     public function collection(Collection $rows)
     {
         $mergedData = [];
 
         foreach ($rows as $row) {
-            $entryNumbers = array_map(function($col) use ($row) {
+            $entryNumbers = array_map(function ($col) use ($row) {
                 return $row[$col];
             }, $this->entry);
 
             $entryNumber = implode('-', $entryNumbers);
 
-            $totalAmount = array_sum(array_map(function($col) use ($row) {
+            $totalAmount = array_sum(array_map(function ($col) use ($row) {
                 return $row[$col];
             }, $this->total));
 
@@ -53,7 +46,6 @@ class MergeImport implements ToCollection
                 $mergedData[$entryNumber]['total'] += $totalAmount;
                 $mergedData[$entryNumber]['rows'][] = $row->toArray(); // Store the rows
                 dd($row->toArray());
-
             } else {
                 $mergedData[$entryNumber] = [
                     'entry_number' => $entryNumber,
@@ -63,8 +55,5 @@ class MergeImport implements ToCollection
                 ];
             }
         }
-
     }
-
-
-    }
+}

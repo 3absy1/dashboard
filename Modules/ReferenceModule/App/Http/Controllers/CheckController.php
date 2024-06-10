@@ -3,42 +3,39 @@
 namespace Modules\ReferenceModule\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\ReferenceModule\App\Models\Reference;
-use Modules\ReferenceModule\App\Models\ExcelData;
+use Modules\ReferenceModule\App\Models\CheckData;
 use Modules\ReferenceModule\App\Imports\Import;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\ReferenceModule\App\DataTables\CheckDataTable;
 use Modules\ReferenceModule\App\Imports\Code;
 use Modules\ReferenceModule\App\Imports\Name;
-use Modules\ReferenceModule\App\Exports\Export;
-
+use Modules\ReferenceModule\App\Exports\CheckExport;
+use Illuminate\Support\Facades\DB;
 
 
 class CheckController extends Controller
 {
     public function index()
     {
-        return view('referencemodule::Check.check',[
-            'exceldata' => ExcelData::all(),
+        return view('referencemodule::Check.check', [
+            'CheckData' => CheckData::all(),
             'references' => Reference::all()
         ]);
     }
-    public function search()
+
+    public function search(CheckDataTable $dataTable)
     {
-        return view('referencemodule::Check.checkSearch',[
-            'exceldata' => ExcelData::all(),
-            'references' => Reference::all()
-        ]);
+        $CheckData = CheckData::all();
+        return $dataTable->render('referencemodule::Check.checkSearch', compact('CheckData'));
     }
-    public function uploadFile(Request $request)
+    public function matchColumns(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls',
+            'file' => 'required|mimes:xlsx,xls|max:10240',
         ]);
 
-    if ($request->file('file')->isValid()) {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
@@ -50,46 +47,38 @@ class CheckController extends Controller
             $firstRow = $importedData->first()->first();
             $stringHeaders = $firstRow->keys()->toArray();
             // $headers = Excel::toArray(new Import(), $filePath);
-            $headers = array_filter($stringHeaders, function($header) {
+            $headers = array_filter($stringHeaders, function ($header) {
                 return !is_numeric($header);
             });
 
-            return view('referencemodule::Check.checkColums',compact('headers'));
+            return view('referencemodule::Check.checkImport', compact('headers'));
+        }
+    }
+
+    public function import(Request $request)
+    {
+
+        $filePath = session('excelFilePath');
+        $name = $request->name;
+        $code = $request->code;
+        CheckData::query()->delete();
+        DB::statement('ALTER TABLE check_data AUTO_INCREMENT = 1;');
+
+        if ($request->select == 1) {
+
+            (new Name($name, $code))->import($filePath);
+        } elseif ($request->select == 2) {
+            (new Code($name, $code))->import($filePath);
         }
 
-        return redirect()->back()->with('error', 'Please select a file to upload.');
+        return redirect()->route('check.search');
     }
 
-    return "Error: Invalid file.";
-}
 
-public function upload(Request $request)
-{
-
-    $filePath = session('excelFilePath');
-    $name =$request->name;
-    $code =$request->code;
-    ExcelData::query()->delete();
-    if($request->select == 1)
+    public function export()
     {
 
-        (new Name($name,$code ))->import($filePath);
-
+        $data = CheckData::select('name', 'code')->get();
+        return Excel::download(new CheckExport($data), 'references.xlsx');
     }
-    elseif($request->select == 2)
-    {
-        (new Code($name,$code))->import($filePath);
-
-    }
-
-    return redirect()->route('search') ;
-}
-public function export(Request $request)
-{
-
-    $data = ExcelData::select('name', 'code')->get();
-    return Excel::download(new Export($data), 'references.xlsx');
-
-}
-
 }
